@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import {
   Sparkles,
-  Wand2,
+  Download,
   Image as ImageIcon,
   Video,
   Zap,
@@ -18,121 +18,123 @@ import {
   Type,
   Layout,
   RefreshCw,
+  ExternalLink,
+  Database,
+  CloudDownload,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface AIAgent {
+interface ImportStep {
   id: string;
   name: string;
   icon: any;
   color: string;
   status: "idle" | "working" | "completed";
   task: string;
-  output?: number;
+  count?: number;
 }
 
 export function AIAssetGenerator() {
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [productDescription, setProductDescription] = useState("");
-  const [targetAudience, setTargetAudience] = useState("");
-  const [brandGuidelines, setBrandGuidelines] = useState("");
-  const [generatedCount, setGeneratedCount] = useState(0);
+  const [isImporting, setIsImporting] = useState(false);
+  const [campaignId, setCampaignId] = useState("");
+  const [apiKey, setApiKey] = useState("");
+  const [importedCount, setImportedCount] = useState(0);
 
-  const [agents, setAgents] = useState<AIAgent[]>([
+  const [steps, setSteps] = useState<ImportStep[]>([
     {
-      id: "concept",
-      name: "Concept Agent",
-      icon: Brain,
+      id: "connect",
+      name: "Connect to Platform",
+      icon: Database,
       color: "bg-purple-500",
       status: "idle",
-      task: "Generating creative concepts and themes",
-      output: 0,
+      task: "Connecting to external AI platform",
+      count: 0,
     },
     {
-      id: "copy",
-      name: "Copywriting Agent",
-      icon: Type,
+      id: "fetch",
+      name: "Fetch Assets",
+      icon: CloudDownload,
       color: "bg-blue-500",
       status: "idle",
-      task: "Writing persuasive ad copy variations",
-      output: 0,
+      task: "Retrieving AI-generated assets",
+      count: 0,
     },
     {
-      id: "design",
-      name: "Design Agent",
-      icon: Palette,
-      color: "bg-pink-500",
-      status: "idle",
-      task: "Creating visual compositions and layouts",
-      output: 0,
-    },
-    {
-      id: "image",
-      name: "Image Generation Agent",
+      id: "images",
+      name: "Import Images",
       icon: ImageIcon,
       color: "bg-orange-400",
       status: "idle",
-      task: "Generating banner images and graphics",
-      output: 0,
+      task: "Importing banner images and graphics",
+      count: 0,
     },
     {
-      id: "video",
-      name: "Video Agent",
+      id: "videos",
+      name: "Import Videos",
       icon: Video,
       color: "bg-green-400",
       status: "idle",
-      task: "Creating video ads and animations",
-      output: 0,
+      task: "Importing video ads and animations",
+      count: 0,
     },
     {
-      id: "optimizer",
-      name: "Optimization Agent",
+      id: "copy",
+      name: "Import Copy Variations",
+      icon: Type,
+      color: "bg-pink-500",
+      status: "idle",
+      task: "Importing ad copy and headlines",
+      count: 0,
+    },
+    {
+      id: "optimize",
+      name: "Sync Metadata",
       icon: Zap,
       color: "bg-yellow-300",
       status: "idle",
-      task: "A/B testing and performance optimization",
-      output: 0,
+      task: "Syncing performance data and tags",
+      count: 0,
     },
   ]);
 
-  const handleGenerate = async () => {
-    setIsGenerating(true);
-    setGeneratedCount(0);
+  const handleImport = async () => {
+    setIsImporting(true);
+    setImportedCount(0);
 
-    // Simulate AI agents working in sequence
-    for (let i = 0; i < agents.length; i++) {
-      // Update agent to working
-      setAgents((prev) =>
-        prev.map((agent, idx) =>
-          idx === i ? { ...agent, status: "working" as const } : agent
+    // Simulate import steps
+    for (let i = 0; i < steps.length; i++) {
+      // Update step to working
+      setSteps((prev) =>
+        prev.map((step, idx) =>
+          idx === i ? { ...step, status: "working" as const } : step
         )
       );
 
-      // Simulate work time
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Simulate import time
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      // Complete agent work with random output
-      const output = Math.floor(Math.random() * 20) + 10;
-      setAgents((prev) =>
-        prev.map((agent, idx) =>
-          idx === i ? { ...agent, status: "completed" as const, output } : agent
+      // Complete step with random count
+      const count = Math.floor(Math.random() * 30) + 15;
+      setSteps((prev) =>
+        prev.map((step, idx) =>
+          idx === i ? { ...step, status: "completed" as const, count } : step
         )
       );
 
-      setGeneratedCount((prev) => prev + output);
+      setImportedCount((prev) => prev + count);
     }
 
-    setIsGenerating(false);
+    setIsImporting(false);
   };
 
   const handleReset = () => {
-    setAgents((prev) =>
-      prev.map((agent) => ({ ...agent, status: "idle" as const, output: 0 }))
+    setSteps((prev) =>
+      prev.map((step) => ({ ...step, status: "idle" as const, count: 0 }))
     );
-    setGeneratedCount(0);
+    setImportedCount(0);
   };
 
-  const allCompleted = agents.every((agent) => agent.status === "completed");
+  const allCompleted = steps.every((step) => step.status === "completed");
 
   return (
     <div className="space-y-6">
@@ -141,14 +143,14 @@ export function AIAssetGenerator() {
         <CardHeader>
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-black neo-shadow-sm flex items-center justify-center">
-              <Sparkles className="w-6 h-6 text-white" />
+              <Download className="w-6 h-6 text-white" />
             </div>
             <div>
               <CardTitle className="text-xl font-bold uppercase">
-                AI Asset Generator
+                Import AI-Generated Assets
               </CardTitle>
               <p className="text-sm text-gray-600 font-medium mt-1">
-                Generate hundreds of optimized ad creatives automatically
+                Import hundreds of AI-created assets from external platform
               </p>
             </div>
           </div>
@@ -159,62 +161,63 @@ export function AIAssetGenerator() {
       <Card>
         <CardHeader>
           <CardTitle className="text-sm font-bold uppercase tracking-wide">
-            Campaign Parameters
+            Platform Connection
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          <div className="bg-blue-50 border-2 border-black rounded-xl p-4">
+            <div className="flex items-start gap-3">
+              <ExternalLink className="w-5 h-5 text-blue-600 mt-0.5" />
+              <div>
+                <h4 className="text-sm font-bold text-black uppercase mb-1">External AI Platform</h4>
+                <p className="text-xs text-gray-600 font-medium">
+                  Connect to your AI asset generation platform to import pre-generated creatives
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div>
             <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">
-              Product Description
+              Campaign ID
             </label>
             <Input
-              placeholder="e.g., Premium wireless headphones with noise cancellation..."
-              value={productDescription}
-              onChange={(e) => setProductDescription(e.target.value)}
-              disabled={isGenerating}
+              placeholder="e.g., camp_abc123xyz456..."
+              value={campaignId}
+              onChange={(e) => setCampaignId(e.target.value)}
+              disabled={isImporting}
             />
           </div>
 
           <div>
             <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">
-              Target Audience
+              API Key
             </label>
             <Input
-              placeholder="e.g., Tech-savvy millennials, music enthusiasts, remote workers..."
-              value={targetAudience}
-              onChange={(e) => setTargetAudience(e.target.value)}
-              disabled={isGenerating}
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">
-              Brand Guidelines (Optional)
-            </label>
-            <Input
-              placeholder="e.g., Colors: #FF6B6B, #4ECDC4 | Tone: Professional yet friendly..."
-              value={brandGuidelines}
-              onChange={(e) => setBrandGuidelines(e.target.value)}
-              disabled={isGenerating}
+              type="password"
+              placeholder="sk-..."
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              disabled={isImporting}
             />
           </div>
 
           <div className="flex gap-3 pt-4">
             <Button
               variant="primary"
-              onClick={handleGenerate}
-              disabled={isGenerating || !productDescription || !targetAudience}
+              onClick={handleImport}
+              disabled={isImporting || !campaignId || !apiKey}
               className="flex items-center gap-2 flex-1"
             >
-              {isGenerating ? (
+              {isImporting ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  Generating...
+                  Importing...
                 </>
               ) : (
                 <>
-                  <Wand2 className="w-4 h-4" />
-                  Generate Assets
+                  <Download className="w-4 h-4" />
+                  Import Assets
                 </>
               )}
             </Button>
@@ -228,13 +231,13 @@ export function AIAssetGenerator() {
         </CardContent>
       </Card>
 
-      {/* AI Agents Status */}
-      {(isGenerating || allCompleted) && (
+      {/* Import Progress */}
+      {(isImporting || allCompleted) && (
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-sm font-bold uppercase tracking-wide">
-                Multi-Agent AI Pipeline
+                Import Progress
               </CardTitle>
               {allCompleted && (
                 <Badge variant="success" className="text-sm">
@@ -245,56 +248,56 @@ export function AIAssetGenerator() {
             </div>
           </CardHeader>
           <CardContent className="space-y-3">
-            {agents.map((agent) => {
-              const Icon = agent.icon;
+            {steps.map((step) => {
+              const Icon = step.icon;
               return (
                 <div
-                  key={agent.id}
+                  key={step.id}
                   className={cn(
                     "p-4 rounded-2xl border-2 border-black transition-all",
-                    agent.status === "working" && "bg-gradient-to-br from-purple-50 to-pink-50 neo-shadow",
-                    agent.status === "completed" && "bg-white neo-shadow-sm",
-                    agent.status === "idle" && "bg-gray-50"
+                    step.status === "working" && "bg-gradient-to-br from-purple-50 to-pink-50 neo-shadow",
+                    step.status === "completed" && "bg-white neo-shadow-sm",
+                    step.status === "idle" && "bg-gray-50"
                   )}
                 >
                   <div className="flex items-center gap-4">
-                    {/* Agent Icon */}
+                    {/* Step Icon */}
                     <div
                       className={cn(
                         "w-12 h-12 rounded-xl border-2 border-black flex items-center justify-center flex-shrink-0",
-                        agent.color,
-                        agent.status === "working" && "animate-pulse neo-shadow-sm"
+                        step.color,
+                        step.status === "working" && "animate-pulse neo-shadow-sm"
                       )}
                     >
-                      {agent.status === "working" ? (
+                      {step.status === "working" ? (
                         <Loader2 className="w-6 h-6 text-white animate-spin" />
-                      ) : agent.status === "completed" ? (
+                      ) : step.status === "completed" ? (
                         <Check className="w-6 h-6 text-white" />
                       ) : (
                         <Icon className="w-6 h-6 text-white" />
                       )}
                     </div>
 
-                    {/* Agent Info */}
+                    {/* Step Info */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <h4 className="text-sm font-bold text-black uppercase">{agent.name}</h4>
-                        {agent.status === "working" && (
+                        <h4 className="text-sm font-bold text-black uppercase">{step.name}</h4>
+                        {step.status === "working" && (
                           <Badge variant="info" className="text-xs">
-                            Working...
+                            Importing...
                           </Badge>
                         )}
-                        {agent.status === "completed" && agent.output && (
+                        {step.status === "completed" && step.count && (
                           <Badge variant="success" className="text-xs">
-                            {agent.output} assets
+                            {step.count} items
                           </Badge>
                         )}
                       </div>
-                      <p className="text-xs text-gray-600 font-medium">{agent.task}</p>
+                      <p className="text-xs text-gray-600 font-medium">{step.task}</p>
                     </div>
 
                     {/* Progress Indicator */}
-                    {agent.status === "working" && (
+                    {step.status === "working" && (
                       <div className="w-24 h-2 bg-gray-200 rounded-full border-2 border-black overflow-hidden">
                         <div className="h-full bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse" />
                       </div>
@@ -307,25 +310,25 @@ export function AIAssetGenerator() {
         </Card>
       )}
 
-      {/* Generated Assets Summary */}
+      {/* Import Summary */}
       {allCompleted && (
         <Card className="bg-gradient-to-br from-green-50 to-blue-50 border-2 border-black neo-shadow-lg">
           <CardContent className="p-8 text-center">
             <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-green-400 to-blue-400 border-2 border-black neo-shadow flex items-center justify-center">
-              <Sparkles className="w-10 h-10 text-white" />
+              <Check className="w-10 h-10 text-white" />
             </div>
-            <h3 className="text-3xl font-bold text-black mb-2">{generatedCount} Assets Generated!</h3>
+            <h3 className="text-3xl font-bold text-black mb-2">{importedCount} Assets Imported!</h3>
             <p className="text-gray-700 font-medium mb-6">
-              Your AI-powered campaign is ready with optimized creatives across all formats
+              Successfully imported AI-generated creatives from external platform
             </p>
             <div className="flex gap-3 justify-center">
               <Button variant="primary" className="flex items-center gap-2">
                 <Check className="w-4 h-4" />
-                Review & Import
+                Use Imported Assets
               </Button>
               <Button variant="ghost" onClick={handleReset} className="flex items-center gap-2">
                 <RefreshCw className="w-4 h-4" />
-                Generate More
+                Import Again
               </Button>
             </div>
           </CardContent>
@@ -337,11 +340,11 @@ export function AIAssetGenerator() {
         <Card className="hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
           <CardContent className="p-6 text-center">
             <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-purple-500 border-2 border-black neo-shadow-sm flex items-center justify-center">
-              <Layout className="w-7 h-7 text-white" />
+              <Database className="w-7 h-7 text-white" />
             </div>
-            <h4 className="text-sm font-bold text-black uppercase mb-2">Multiple Formats</h4>
+            <h4 className="text-sm font-bold text-black uppercase mb-2">External Platform</h4>
             <p className="text-xs text-gray-600 font-medium">
-              Banners, Stories, Reels, Videos, Display Ads
+              Connect to any AI asset generation platform
             </p>
           </CardContent>
         </Card>
@@ -349,11 +352,11 @@ export function AIAssetGenerator() {
         <Card className="hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
           <CardContent className="p-6 text-center">
             <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-orange-400 border-2 border-black neo-shadow-sm flex items-center justify-center">
-              <Zap className="w-7 h-7 text-white" />
+              <CloudDownload className="w-7 h-7 text-white" />
             </div>
-            <h4 className="text-sm font-bold text-black uppercase mb-2">Auto-Optimized</h4>
+            <h4 className="text-sm font-bold text-black uppercase mb-2">Bulk Import</h4>
             <p className="text-xs text-gray-600 font-medium">
-              AI-powered A/B testing and performance optimization
+              Import hundreds of assets in seconds
             </p>
           </CardContent>
         </Card>
@@ -361,11 +364,11 @@ export function AIAssetGenerator() {
         <Card className="hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
           <CardContent className="p-6 text-center">
             <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-pink-500 border-2 border-black neo-shadow-sm flex items-center justify-center">
-              <Brain className="w-7 h-7 text-white" />
+              <Zap className="w-7 h-7 text-white" />
             </div>
-            <h4 className="text-sm font-bold text-black uppercase mb-2">Brand Consistent</h4>
+            <h4 className="text-sm font-bold text-black uppercase mb-2">Ready to Use</h4>
             <p className="text-xs text-gray-600 font-medium">
-              Follows your brand guidelines and visual identity
+              Pre-optimized creatives with metadata
             </p>
           </CardContent>
         </Card>
