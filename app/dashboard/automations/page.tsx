@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useStore } from "@/lib/store";
 import { useTranslation } from "@/lib/i18n/context";
 import { useToast } from "@/components/ui/toast";
@@ -11,7 +11,9 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogHeader, DialogTitle, DialogContent, DialogFooter } from "@/components/ui/dialog";
-import { Plus, Edit2, Trash2, Clock } from "lucide-react";
+import { EmptyState } from "@/components/ui/empty-state";
+import { CardSkeleton } from "@/components/ui/skeleton";
+import { Plus, Edit2, Trash2, Clock, Zap } from "lucide-react";
 import type { AutomationRule } from "@/lib/mock-data";
 
 export default function AutomationsPage() {
@@ -27,6 +29,15 @@ export default function AutomationsPage() {
   const [createDialog, setCreateDialog] = useState(false);
   const [editDialog, setEditDialog] = useState<AutomationRule | null>(null);
   const [deleteDialog, setDeleteDialog] = useState<AutomationRule | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const [formData, setFormData] = useState<{
     name: string;
@@ -172,71 +183,99 @@ export default function AutomationsPage() {
         </Button>
       </div>
 
+      {/* Loading State */}
+      {isLoading && (
+        <div className="space-y-4">
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+        </div>
+      )}
+
+      {/* Empty State */}
+      {!isLoading && automationRules.length === 0 && (
+        <Card>
+          <CardContent>
+            <EmptyState
+              icon={Zap}
+              title="No automation rules yet"
+              description="Create your first automation rule to automatically manage your campaigns based on performance metrics."
+              action={{
+                label: "Create Rule",
+                onClick: () => setCreateDialog(true),
+              }}
+            />
+          </CardContent>
+        </Card>
+      )}
+
       {/* Rules List */}
-      <div className="space-y-4">
-        {automationRules.map((rule) => (
-          <Card key={rule.id}>
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-lg font-semibold text-gray-900">{rule.name}</h3>
-                    <Switch
-                      checked={rule.enabled}
-                      onChange={() => handleToggle(rule.id, rule.name, rule.enabled)}
-                    />
-                  </div>
+      {!isLoading && automationRules.length > 0 && (
+        <div className="space-y-4">
+          {automationRules.map((rule) => (
+            <Card key={rule.id}>
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-lg font-semibold text-gray-900">{rule.name}</h3>
+                      <Switch
+                        checked={rule.enabled}
+                        onChange={() => handleToggle(rule.id, rule.name, rule.enabled)}
+                      />
+                    </div>
 
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <span className="font-medium">{t.automations.list.trigger}:</span>
-                      <span>{formatTrigger(rule)}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <span className="font-medium">{t.automations.list.action}:</span>
-                      <span>{formatAction(rule)}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <span className="font-medium">{t.automations.list.appliesTo}:</span>
-                      <span>
-                        {rule.appliesTo === "all"
-                          ? t.automations.appliesTo.all
-                          : campaigns.find((c) => c.id === rule.appliesTo)?.name ||
-                            t.automations.appliesTo.specific}
-                      </span>
-                    </div>
-                    {rule.lastRun && (
-                      <div className="flex items-center gap-2 text-gray-500 text-xs">
-                        <Clock className="w-3 h-3" />
-                        {t.automations.list.lastRun}: {new Date(rule.lastRun).toLocaleString()}
-                        {" • "}
-                        {t.automations.list.timesTriggered}: {rule.timesTriggered}
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center gap-2 text-gray-600">
+                        <span className="font-medium">{t.automations.list.trigger}:</span>
+                        <span>{formatTrigger(rule)}</span>
                       </div>
-                    )}
+                      <div className="flex items-center gap-2 text-gray-600">
+                        <span className="font-medium">{t.automations.list.action}:</span>
+                        <span>{formatAction(rule)}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-gray-600">
+                        <span className="font-medium">{t.automations.list.appliesTo}:</span>
+                        <span>
+                          {rule.appliesTo === "all"
+                            ? t.automations.appliesTo.all
+                            : campaigns.find((c) => c.id === rule.appliesTo)?.name ||
+                              t.automations.appliesTo.specific}
+                        </span>
+                      </div>
+                      {rule.lastRun && (
+                        <div className="flex items-center gap-2 text-gray-500 text-xs">
+                          <Clock className="w-3 h-3" />
+                          {t.automations.list.lastRun}: {new Date(rule.lastRun).toLocaleString()}
+                          {" • "}
+                          {t.automations.list.timesTriggered}: {rule.timesTriggered}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => openEdit(rule)}
+                    >
+                      <Edit2 className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setDeleteDialog(rule)}
+                    >
+                      <Trash2 className="w-4 h-4 text-red-600" />
+                    </Button>
                   </div>
                 </div>
-
-                <div className="flex items-center gap-2">
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => openEdit(rule)}
-                  >
-                    <Edit2 className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => setDeleteDialog(rule)}
-                  >
-                    <Trash2 className="w-4 h-4 text-red-600" />
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
 
       {/* Create/Edit Dialog */}
       <Dialog

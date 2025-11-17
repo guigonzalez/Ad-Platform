@@ -10,11 +10,39 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  Sparkles,
+  Brain,
+  TrendingUp,
+  Users,
+  Target,
+  DollarSign,
+  Calendar,
+  MapPin,
+  Zap,
+  Type,
+  Video,
+} from "lucide-react";
 import type { Platform, CampaignObjective } from "@/lib/mock-data";
 import type { CreativeAsset } from "@/lib/types/assets";
-import { AssetUpload } from "@/components/campaign/asset-upload";
-import { AIAssetGenerator } from "@/components/campaign/ai-asset-generator";
+import { AIAssetSearch } from "@/components/campaign/ai-asset-search";
+import { cn, formatNumber } from "@/lib/utils";
+
+interface AIMetadata {
+  suggestedName: string;
+  suggestedObjective: CampaignObjective;
+  suggestedBudget: number;
+  detectedCategories: string[];
+  targetAudience: {
+    ageFrom: number;
+    ageTo: number;
+    interests: string[];
+  };
+}
 
 interface FormData {
   name: string;
@@ -28,12 +56,13 @@ interface FormData {
   ageTo: number;
   gender: "all" | "male" | "female";
   interests: string[];
-  assets: CreativeAsset[];
+  assets: any[];
   destinationUrl: string;
   headline: string;
   description: string;
   cta: string;
   termsAccepted: boolean;
+  aiGenerated: boolean;
 }
 
 export default function CreateCampaignPage() {
@@ -43,6 +72,7 @@ export default function CreateCampaignPage() {
   const createCampaign = useStore((state) => state.createCampaign);
 
   const [currentStep, setCurrentStep] = useState(1);
+  const [aiMetadata, setAiMetadata] = useState<AIMetadata | null>(null);
   const [formData, setFormData] = useState<FormData>({
     name: "",
     platform: [],
@@ -61,6 +91,7 @@ export default function CreateCampaignPage() {
     description: "",
     cta: "",
     termsAccepted: false,
+    aiGenerated: false,
   });
 
   const updateForm = (updates: Partial<FormData>) => {
@@ -72,6 +103,30 @@ export default function CreateCampaignPage() {
       ? formData.platform.filter((p) => p !== platform)
       : [...formData.platform, platform];
     updateForm({ platform: platforms });
+  };
+
+  const handleImportComplete = (assets: any[], metadata: AIMetadata) => {
+    // Store AI metadata
+    setAiMetadata(metadata);
+
+    // Update form with AI-generated data
+    updateForm({
+      assets,
+      name: metadata.suggestedName,
+      objective: metadata.suggestedObjective,
+      dailyBudget: metadata.suggestedBudget,
+      ageFrom: metadata.targetAudience.ageFrom,
+      ageTo: metadata.targetAudience.ageTo,
+      interests: metadata.targetAudience.interests,
+      platform: ["META", "GOOGLE"],
+      aiGenerated: true,
+      // Extract headline and description from copy assets if available
+      headline: assets.find((a) => a.type === "copy" && a.format === "headline")?.content || "",
+      description: assets.find((a) => a.type === "copy" && a.format === "description")?.content || "",
+    });
+
+    // Move to next step
+    setCurrentStep(2);
   };
 
   const handleSubmit = () => {
@@ -108,15 +163,13 @@ export default function CreateCampaignPage() {
   const canProceed = () => {
     switch (currentStep) {
       case 1:
-        return formData.name && formData.platform.length > 0 && formData.dailyBudget > 0;
+        // Step 1: Need imported assets
+        return formData.assets.length > 0 && formData.aiGenerated;
       case 2:
-        return formData.ageFrom >= 18 && formData.ageTo <= 65;
+        // Step 2: AI-generated params, can proceed if all filled
+        return formData.name && formData.platform.length > 0 && formData.dailyBudget > 0;
       case 3:
-        // Assets are optional, can proceed without them
-        return true;
-      case 4:
-        return formData.destinationUrl && formData.headline && formData.description;
-      case 5:
+        // Step 3: Review and launch
         return formData.termsAccepted;
       default:
         return false;
@@ -138,118 +191,234 @@ export default function CreateCampaignPage() {
       </div>
 
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">{t.wizard.title}</h1>
-        <p className="text-gray-500 mt-1">
-          {t.wizard.step} {currentStep} {t.wizard.of} 5
+        <h1 className="text-3xl font-bold text-gray-900 uppercase">AI-Powered Campaign Builder</h1>
+        <p className="text-gray-500 mt-1 font-medium">
+          Step {currentStep} of 3 • {formData.aiGenerated && "✨ AI-Optimized"}
         </p>
       </div>
 
       {/* Progress Steps */}
-      <div className="flex items-center justify-between">
-        {[1, 2, 3, 4, 5].map((step) => (
-          <div key={step} className="flex items-center flex-1">
+      <div className="grid grid-cols-3 gap-4">
+        {[
+          { num: 1, label: "Import AI Assets", icon: Sparkles },
+          { num: 2, label: "Review & Customize", icon: Brain },
+          { num: 3, label: "Launch Campaign", icon: Zap },
+        ].map((step) => {
+          const Icon = step.icon;
+          return (
             <div
-              className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
-                step < currentStep
-                  ? "bg-blue-600 text-white"
-                  : step === currentStep
-                  ? "bg-blue-100 text-blue-600 ring-2 ring-blue-600"
-                  : "bg-gray-200 text-gray-500"
-              }`}
+              key={step.num}
+              className={cn(
+                "p-4 rounded-2xl border-2 border-black transition-all",
+                step.num < currentStep && "bg-gradient-to-br from-green-50 to-blue-50 neo-shadow-sm",
+                step.num === currentStep && "bg-gradient-to-br from-purple-50 to-pink-50 neo-shadow",
+                step.num > currentStep && "bg-gray-50"
+              )}
             >
-              {step < currentStep ? <Check className="w-5 h-5" /> : step}
+              <div className="flex items-center gap-3">
+                <div
+                  className={cn(
+                    "w-10 h-10 rounded-xl flex items-center justify-center border-2 border-black font-bold text-lg",
+                    step.num < currentStep && "bg-green-400 text-white",
+                    step.num === currentStep && "bg-purple-500 text-white",
+                    step.num > currentStep && "bg-gray-200 text-gray-500"
+                  )}
+                >
+                  {step.num < currentStep ? <Check className="w-5 h-5" /> : <Icon className="w-5 h-5" />}
+                </div>
+                <div>
+                  <p
+                    className={cn(
+                      "text-xs font-bold uppercase tracking-wide",
+                      step.num <= currentStep ? "text-black" : "text-gray-500"
+                    )}
+                  >
+                    Step {step.num}
+                  </p>
+                  <p
+                    className={cn(
+                      "text-sm font-bold",
+                      step.num <= currentStep ? "text-black" : "text-gray-400"
+                    )}
+                  >
+                    {step.label}
+                  </p>
+                </div>
+              </div>
             </div>
-            {step < 4 && (
-              <div
-                className={`flex-1 h-1 mx-2 ${
-                  step < currentStep ? "bg-blue-600" : "bg-gray-200"
-                }`}
-              />
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Form Content */}
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            {currentStep === 1 && t.wizard.step1.title}
-            {currentStep === 2 && t.wizard.step2.title}
-            {currentStep === 3 && "Creative Assets"}
-            {currentStep === 4 && t.wizard.step3.title}
-            {currentStep === 5 && t.wizard.step4.title}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Step 1: Basic Info */}
-          {currentStep === 1 && (
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {t.wizard.step1.campaignName}
-                </label>
-                <Input
-                  value={formData.name}
-                  onChange={(e) => updateForm({ name: e.target.value })}
-                  placeholder={t.wizard.step1.campaignNamePlaceholder}
-                />
-              </div>
+      {currentStep === 1 && (
+        <div>
+          <AIAssetSearch onImportComplete={handleImportComplete} />
+        </div>
+      )}
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t.wizard.step1.platform}
-                </label>
-                <div className="space-y-2">
-                  <Checkbox
-                    label={t.wizard.step1.google}
-                    checked={formData.platform.includes("GOOGLE")}
-                    onChange={() => handlePlatformToggle("GOOGLE")}
+      {currentStep === 2 && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-xl font-bold uppercase">
+                AI-Generated Campaign Parameters
+              </CardTitle>
+              {formData.aiGenerated && (
+                <Badge variant="success" className="flex items-center gap-1">
+                  <Sparkles className="w-4 h-4" />
+                  AI-Optimized
+                </Badge>
+              )}
+            </div>
+            <p className="text-sm text-gray-600 font-medium mt-2">
+              Review and customize the AI-generated campaign settings based on your imported assets
+            </p>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* AI Insights Card */}
+            {aiMetadata && (
+              <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-black">
+                <CardHeader>
+                  <CardTitle className="text-sm font-bold uppercase tracking-wide flex items-center gap-2">
+                    <Brain className="w-5 h-5 text-purple-500" />
+                    AI Analysis Insights
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-white p-3 rounded-xl border-2 border-black">
+                      <p className="text-xs font-bold text-gray-600 uppercase mb-1">
+                        Detected Categories
+                      </p>
+                      <div className="flex flex-wrap gap-1">
+                        {aiMetadata.detectedCategories.map((cat) => (
+                          <Badge key={cat} variant="default" className="text-xs">
+                            {cat}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="bg-white p-3 rounded-xl border-2 border-black">
+                      <p className="text-xs font-bold text-gray-600 uppercase mb-1">
+                        Suggested Interests
+                      </p>
+                      <div className="flex flex-wrap gap-1">
+                        {aiMetadata.targetAudience.interests.slice(0, 3).map((interest) => (
+                          <Badge key={interest} variant="info" className="text-xs">
+                            {interest}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            <div className="space-y-6">
+              {/* Campaign Name & Platforms */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">
+                    Campaign Name
+                  </label>
+                  <Input
+                    value={formData.name}
+                    onChange={(e) => updateForm({ name: e.target.value })}
+                    placeholder="Enter campaign name"
                   />
-                  <Checkbox
-                    label={t.wizard.step1.meta}
-                    checked={formData.platform.includes("META")}
-                    onChange={() => handlePlatformToggle("META")}
-                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">
+                    Objective
+                  </label>
+                  <Select
+                    value={formData.objective}
+                    onChange={(e) =>
+                      updateForm({ objective: e.target.value as CampaignObjective })
+                    }
+                  >
+                    <option value="TRAFFIC">Website Traffic</option>
+                    <option value="LEADS">Lead Generation</option>
+                    <option value="SALES">Sales & Conversions</option>
+                    <option value="AWARENESS">Brand Awareness</option>
+                  </Select>
                 </div>
               </div>
 
+              {/* Platforms */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {t.wizard.step1.objective}
+                <label className="block text-sm font-bold text-black mb-3 uppercase tracking-wide">
+                  Advertising Platforms
                 </label>
-                <Select
-                  value={formData.objective}
-                  onChange={(e) =>
-                    updateForm({ objective: e.target.value as CampaignObjective })
-                  }
-                >
-                  <option value="TRAFFIC">{t.wizard.step1.traffic}</option>
-                  <option value="LEADS">{t.wizard.step1.leads}</option>
-                  <option value="SALES">{t.wizard.step1.sales}</option>
-                  <option value="AWARENESS">{t.wizard.step1.awareness}</option>
-                </Select>
+                <div className="grid grid-cols-2 gap-3">
+                  <div
+                    onClick={() => handlePlatformToggle("GOOGLE")}
+                    className={cn(
+                      "p-4 rounded-2xl border-2 border-black cursor-pointer transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]",
+                      formData.platform.includes("GOOGLE")
+                        ? "bg-blue-50 neo-shadow"
+                        : "bg-white"
+                    )}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-blue-500 border-2 border-black flex items-center justify-center">
+                          <span className="text-white font-bold text-lg">G</span>
+                        </div>
+                        <span className="font-bold text-black uppercase">Google Ads</span>
+                      </div>
+                      {formData.platform.includes("GOOGLE") && (
+                        <Check className="w-5 h-5 text-blue-600" />
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    onClick={() => handlePlatformToggle("META")}
+                    className={cn(
+                      "p-4 rounded-2xl border-2 border-black cursor-pointer transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]",
+                      formData.platform.includes("META")
+                        ? "bg-purple-50 neo-shadow"
+                        : "bg-white"
+                    )}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-purple-500 border-2 border-black flex items-center justify-center">
+                          <span className="text-white font-bold text-lg">M</span>
+                        </div>
+                        <span className="font-bold text-black uppercase">Meta Ads</span>
+                      </div>
+                      {formData.platform.includes("META") && (
+                        <Check className="w-5 h-5 text-purple-600" />
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {t.wizard.step1.dailyBudget}
-                </label>
-                <Input
-                  type="number"
-                  value={formData.dailyBudget}
-                  onChange={(e) =>
-                    updateForm({ dailyBudget: parseFloat(e.target.value) })
-                  }
-                  min="1"
-                  step="1"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
+              {/* Budget & Dates */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {t.wizard.step1.startDate}
+                  <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide flex items-center gap-2">
+                    <DollarSign className="w-4 h-4 text-green-600" />
+                    Daily Budget
+                  </label>
+                  <Input
+                    type="number"
+                    value={formData.dailyBudget}
+                    onChange={(e) =>
+                      updateForm({ dailyBudget: parseFloat(e.target.value) })
+                    }
+                    min="1"
+                    step="1"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-blue-600" />
+                    Start Date
                   </label>
                   <Input
                     type="date"
@@ -258,8 +427,9 @@ export default function CreateCampaignPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {t.wizard.step1.endDate}
+                  <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-blue-600" />
+                    End Date (Optional)
                   </label>
                   <Input
                     type="date"
@@ -268,266 +438,306 @@ export default function CreateCampaignPage() {
                   />
                 </div>
               </div>
-            </div>
-          )}
 
-          {/* Step 2: Targeting */}
-          {currentStep === 2 && (
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {t.wizard.step2.locations}
-                </label>
-                <Input
-                  placeholder={t.wizard.step2.locationsPlaceholder}
-                  defaultValue="United States, Brazil"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t.wizard.step2.age}
-                </label>
-                <div className="grid grid-cols-2 gap-4">
+              {/* Audience Targeting */}
+              <Card className="bg-gray-50 border-2 border-black">
+                <CardHeader>
+                  <CardTitle className="text-sm font-bold uppercase tracking-wide flex items-center gap-2">
+                    <Users className="w-5 h-5 text-purple-500" />
+                    Target Audience
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
                   <div>
-                    <label className="block text-xs text-gray-500 mb-1">
-                      {t.wizard.step2.ageFrom}
+                    <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">
+                      Age Range
                     </label>
-                    <Input
-                      type="number"
-                      value={formData.ageFrom}
-                      onChange={(e) =>
-                        updateForm({ ageFrom: parseInt(e.target.value) })
-                      }
-                      min="18"
-                      max="65"
-                    />
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Input
+                          type="number"
+                          value={formData.ageFrom}
+                          onChange={(e) =>
+                            updateForm({ ageFrom: parseInt(e.target.value) })
+                          }
+                          min="18"
+                          max="65"
+                          placeholder="From"
+                        />
+                      </div>
+                      <div>
+                        <Input
+                          type="number"
+                          value={formData.ageTo}
+                          onChange={(e) =>
+                            updateForm({ ageTo: parseInt(e.target.value) })
+                          }
+                          min="18"
+                          max="65"
+                          placeholder="To"
+                        />
+                      </div>
+                    </div>
                   </div>
+
                   <div>
-                    <label className="block text-xs text-gray-500 mb-1">
-                      {t.wizard.step2.ageTo}
+                    <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">
+                      Gender
                     </label>
-                    <Input
-                      type="number"
-                      value={formData.ageTo}
+                    <Select
+                      value={formData.gender}
                       onChange={(e) =>
-                        updateForm({ ageTo: parseInt(e.target.value) })
+                        updateForm({ gender: e.target.value as typeof formData.gender })
                       }
-                      min="18"
-                      max="65"
-                    />
+                    >
+                      <option value="all">All Genders</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </Select>
                   </div>
-                </div>
-              </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t.wizard.step2.gender}
-                </label>
-                <Select
-                  value={formData.gender}
-                  onChange={(e) =>
-                    updateForm({ gender: e.target.value as typeof formData.gender })
-                  }
-                >
-                  <option value="all">{t.wizard.step2.all}</option>
-                  <option value="male">{t.wizard.step2.male}</option>
-                  <option value="female">{t.wizard.step2.female}</option>
-                </Select>
-              </div>
+                  <div>
+                    <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">
+                      Locations
+                    </label>
+                    <Input placeholder="e.g., United States, Brazil, United Kingdom" />
+                  </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {t.wizard.step2.interests}
-                </label>
-                <Input placeholder={t.wizard.step2.interestsPlaceholder} />
-              </div>
+                  <div>
+                    <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">
+                      Interests (AI-Suggested)
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {formData.interests.map((interest) => (
+                        <Badge key={interest} variant="info">
+                          {interest}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Ad Copy */}
+              {(formData.headline || formData.description) && (
+                <Card className="bg-gradient-to-br from-green-50 to-blue-50 border-2 border-black">
+                  <CardHeader>
+                    <CardTitle className="text-sm font-bold uppercase tracking-wide flex items-center gap-2">
+                      <Sparkles className="w-5 h-5 text-green-600" />
+                      AI-Generated Ad Copy
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {formData.headline && (
+                      <div>
+                        <label className="block text-xs font-bold text-gray-600 uppercase mb-1">
+                          Headline
+                        </label>
+                        <Input
+                          value={formData.headline}
+                          onChange={(e) => updateForm({ headline: e.target.value })}
+                        />
+                      </div>
+                    )}
+                    {formData.description && (
+                      <div>
+                        <label className="block text-xs font-bold text-gray-600 uppercase mb-1">
+                          Description
+                        </label>
+                        <textarea
+                          value={formData.description}
+                          onChange={(e) => updateForm({ description: e.target.value })}
+                          rows={3}
+                          className="w-full px-3 py-2 border-2 border-black rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        />
+                      </div>
+                    )}
+                    <div>
+                      <label className="block text-xs font-bold text-gray-600 uppercase mb-1">
+                        Destination URL
+                      </label>
+                      <Input
+                        type="url"
+                        value={formData.destinationUrl}
+                        onChange={(e) => updateForm({ destinationUrl: e.target.value })}
+                        placeholder="https://example.com"
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </div>
-          )}
+          </CardContent>
+        </Card>
+      )}
 
-          {/* Step 3: Creative Assets */}
-          {currentStep === 3 && (
-            <div className="space-y-6">
-              {/* AI Asset Generator */}
-              <AIAssetGenerator />
+      {/* Step 3: Review & Launch */}
+      {currentStep === 3 && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-xl font-bold uppercase">
+                Review & Launch Campaign
+              </CardTitle>
+              <Badge variant="success" className="flex items-center gap-1">
+                <Check className="w-4 h-4" />
+                Ready to Launch
+              </Badge>
+            </div>
+            <p className="text-sm text-gray-600 font-medium mt-2">
+              Review your AI-optimized campaign before launching
+            </p>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Campaign Summary */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-black">
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3 mb-2">
+                    <Target className="w-5 h-5 text-purple-600" />
+                    <p className="text-xs font-bold text-gray-600 uppercase">Campaign</p>
+                  </div>
+                  <p className="text-lg font-bold text-black">{formData.name}</p>
+                  <p className="text-sm text-gray-600 font-medium mt-1">{formData.objective}</p>
+                </CardContent>
+              </Card>
 
-              {/* Divider */}
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t-2 border-black"></div>
-                </div>
-                <div className="relative flex justify-center">
-                  <span className="bg-gray-50 px-4 text-sm font-bold text-gray-700 uppercase">
-                    Or Upload Manually
-                  </span>
-                </div>
-              </div>
-
-              {/* Manual Upload */}
-              <div>
-                <div className="mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2 uppercase">Upload Creative Assets</h3>
-                  <p className="text-sm text-gray-600">
-                    Add images, videos, stories, and other creative assets for your campaign
+              <Card className="bg-gradient-to-br from-green-50 to-blue-50 border-2 border-black">
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3 mb-2">
+                    <DollarSign className="w-5 h-5 text-green-600" />
+                    <p className="text-xs font-bold text-gray-600 uppercase">Daily Budget</p>
+                  </div>
+                  <p className="text-lg font-bold text-black">${formData.dailyBudget}</p>
+                  <p className="text-sm text-gray-600 font-medium mt-1">
+                    ~${formData.dailyBudget * 30} /month
                   </p>
-                </div>
+                </CardContent>
+              </Card>
 
-                <AssetUpload
-                  platform={formData.platform.length === 1 ? formData.platform[0] : "BOTH"}
-                  value={formData.assets}
-                  onChange={(assets) => updateForm({ assets })}
-                />
+              <Card className="bg-gradient-to-br from-orange-50 to-yellow-50 border-2 border-black">
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3 mb-2">
+                    <Users className="w-5 h-5 text-orange-600" />
+                    <p className="text-xs font-bold text-gray-600 uppercase">Target Audience</p>
+                  </div>
+                  <p className="text-lg font-bold text-black">
+                    {formData.ageFrom}-{formData.ageTo} years
+                  </p>
+                  <p className="text-sm text-gray-600 font-medium mt-1 capitalize">
+                    {formData.gender === "all" ? "All genders" : formData.gender}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Platforms */}
+            <div>
+              <h3 className="text-sm font-bold text-black uppercase tracking-wide mb-3">
+                Active Platforms
+              </h3>
+              <div className="flex gap-3">
+                {formData.platform.map((platform) => (
+                  <Badge
+                    key={platform}
+                    variant={platform === "GOOGLE" ? "info" : "default"}
+                    className="text-sm px-4 py-2"
+                  >
+                    {platform}
+                  </Badge>
+                ))}
               </div>
             </div>
-          )}
 
-          {/* Step 4: Ad Copy & Creative */}
-          {currentStep === 4 && (
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {t.wizard.step3.destinationUrl}
-                </label>
-                <Input
-                  type="url"
-                  value={formData.destinationUrl}
-                  onChange={(e) => updateForm({ destinationUrl: e.target.value })}
-                  placeholder={t.wizard.step3.destinationUrlPlaceholder}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {t.wizard.step3.headline}
-                </label>
-                <Input
-                  value={formData.headline}
-                  onChange={(e) => updateForm({ headline: e.target.value })}
-                  placeholder={t.wizard.step3.headlinePlaceholder}
-                  maxLength={30}
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  {formData.headline.length}/30
-                </p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {t.wizard.step3.description}
-                </label>
-                <textarea
-                  value={formData.description}
-                  onChange={(e) => updateForm({ description: e.target.value })}
-                  placeholder={t.wizard.step3.descriptionPlaceholder}
-                  maxLength={90}
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  {formData.description.length}/90
-                </p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {t.wizard.step3.cta}
-                </label>
-                <Input
-                  value={formData.cta}
-                  onChange={(e) => updateForm({ cta: e.target.value })}
-                  placeholder={t.wizard.step3.ctaPlaceholder}
-                />
+            {/* Assets Preview */}
+            <div>
+              <h3 className="text-sm font-bold text-black uppercase tracking-wide mb-3">
+                Imported Assets ({formData.assets.length})
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {formData.assets.slice(0, 4).map((asset: any) => (
+                  <div
+                    key={asset.id}
+                    className="aspect-square rounded-xl border-2 border-black overflow-hidden bg-gray-100"
+                  >
+                    {asset.type === "image" && asset.preview && (
+                      <img
+                        src={asset.preview}
+                        alt={asset.name}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                    {asset.type === "video" && asset.thumbnail && (
+                      <div className="relative w-full h-full">
+                        <img
+                          src={asset.thumbnail}
+                          alt={asset.name}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-8 h-8 rounded-full bg-black/50 border-2 border-white flex items-center justify-center">
+                            <Video className="w-4 h-4 text-white" />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    {asset.type === "copy" && (
+                      <div className="w-full h-full flex items-center justify-center p-4 bg-gradient-to-br from-purple-50 to-pink-50">
+                        <Type className="w-8 h-8 text-purple-500" />
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
-          )}
 
-          {/* Step 5: Review */}
-          {currentStep === 5 && (
-            <div className="space-y-6">
-              <div className="bg-gray-50 rounded-lg p-4 space-y-4">
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    {t.wizard.step4.basicInfo}
-                  </h3>
-                  <div className="space-y-1 text-sm">
-                    <p>
-                      <span className="text-gray-600">Name:</span>{" "}
-                      <span className="font-medium">{formData.name}</span>
+            {/* Performance Estimate */}
+            <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-black">
+              <CardHeader>
+                <CardTitle className="text-sm font-bold uppercase tracking-wide flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-blue-600" />
+                  AI-Estimated Performance
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <p className="text-xs font-bold text-gray-600 uppercase mb-1">
+                      Est. Reach
                     </p>
-                    <p>
-                      <span className="text-gray-600">Platform(s):</span>{" "}
-                      <span className="font-medium">
-                        {formData.platform.join(", ")}
-                      </span>
-                    </p>
-                    <p>
-                      <span className="text-gray-600">Objective:</span>{" "}
-                      <span className="font-medium">{formData.objective}</span>
-                    </p>
-                    <p>
-                      <span className="text-gray-600">Daily Budget:</span>{" "}
-                      <span className="font-medium">${formData.dailyBudget}</span>
+                    <p className="text-2xl font-bold text-black">
+                      {formatNumber(formData.dailyBudget * 1000)}
                     </p>
                   </div>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    {t.wizard.step4.targeting}
-                  </h3>
-                  <div className="space-y-1 text-sm">
-                    <p>
-                      <span className="text-gray-600">Age:</span>{" "}
-                      <span className="font-medium">
-                        {formData.ageFrom} - {formData.ageTo}
-                      </span>
-                    </p>
-                    <p>
-                      <span className="text-gray-600">Gender:</span>{" "}
-                      <span className="font-medium">{formData.gender}</span>
+                  <div>
+                    <p className="text-xs font-bold text-gray-600 uppercase mb-1">Est. Clicks</p>
+                    <p className="text-2xl font-bold text-black">
+                      {formatNumber(Math.floor(formData.dailyBudget * 35))}
                     </p>
                   </div>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    {t.wizard.step4.creative}
-                  </h3>
-                  <div className="space-y-1 text-sm">
-                    <p>
-                      <span className="text-gray-600">Headline:</span>{" "}
-                      <span className="font-medium">{formData.headline}</span>
+                  <div>
+                    <p className="text-xs font-bold text-gray-600 uppercase mb-1">
+                      Est. CTR
                     </p>
-                    <p>
-                      <span className="text-gray-600">URL:</span>{" "}
-                      <span className="font-medium text-blue-600">
-                        {formData.destinationUrl}
-                      </span>
-                    </p>
+                    <p className="text-2xl font-bold text-black">3.5%</p>
                   </div>
                 </div>
-              </div>
+              </CardContent>
+            </Card>
 
-              <div className="border border-blue-200 bg-blue-50 rounded-lg p-4">
-                <h4 className="font-semibold text-blue-900 mb-2">
-                  {t.wizard.step4.estimatedReach}
-                </h4>
-                <p className="text-2xl font-bold text-blue-600">
-                  {t.wizard.step4.estimatedReachValue}
-                </p>
-              </div>
-
+            {/* Terms & Conditions */}
+            <div className="bg-yellow-50 border-2 border-black rounded-2xl p-6">
               <Checkbox
-                label={t.wizard.step4.terms}
+                label="I agree to the terms and conditions and confirm that this campaign complies with advertising policies"
                 checked={formData.termsAccepted}
                 onChange={(e) =>
                   updateForm({ termsAccepted: e.target.checked })
                 }
               />
             </div>
-          )}
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Navigation Buttons */}
       <div className="flex justify-between">
@@ -535,18 +745,20 @@ export default function CreateCampaignPage() {
           variant="ghost"
           onClick={() => setCurrentStep((prev) => Math.max(1, prev - 1))}
           disabled={currentStep === 1}
+          className="flex items-center gap-2"
         >
-          {t.wizard.previous}
+          <ArrowLeft className="w-4 h-4" />
+          Previous
         </Button>
 
-        {currentStep < 5 ? (
+        {currentStep < 3 ? (
           <Button
             variant="primary"
             onClick={() => setCurrentStep((prev) => prev + 1)}
             disabled={!canProceed()}
             className="flex items-center gap-2"
           >
-            {t.wizard.next}
+            Continue
             <ArrowRight className="w-4 h-4" />
           </Button>
         ) : (
@@ -554,13 +766,14 @@ export default function CreateCampaignPage() {
             variant="primary"
             onClick={handleSubmit}
             disabled={!canProceed()}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 text-lg px-8 py-6"
           >
-            <Check className="w-4 h-4" />
-            {t.wizard.step4.launchCampaign}
+            <Zap className="w-5 h-5" />
+            Launch Campaign
           </Button>
         )}
       </div>
     </div>
   );
 }
+

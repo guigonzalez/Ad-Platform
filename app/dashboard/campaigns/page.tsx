@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useStore } from "@/lib/store";
 import { useTranslation } from "@/lib/i18n/context";
 import { useToast } from "@/components/ui/toast";
@@ -11,6 +12,8 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Dropdown } from "@/components/ui/dropdown";
 import { Dialog, DialogHeader, DialogTitle, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import { EmptyState } from "@/components/ui/empty-state";
+import { TableSkeleton } from "@/components/ui/skeleton";
 import { formatCurrency, formatNumber, formatPercentage, formatDate } from "@/lib/utils";
 import {
   Plus,
@@ -23,10 +26,13 @@ import {
   MoreVertical,
   Filter,
   Image as ImageIcon,
+  Megaphone,
+  SearchX,
 } from "lucide-react";
 import type { Campaign } from "@/lib/mock-data";
 
 export default function CampaignsPage() {
+  const router = useRouter();
   const { t } = useTranslation();
   const { showToast } = useToast();
   const campaigns = useStore((state) => state.campaigns);
@@ -42,6 +48,15 @@ export default function CampaignsPage() {
   const [editBudgetDialog, setEditBudgetDialog] = useState<Campaign | null>(null);
   const [newBudget, setNewBudget] = useState("");
   const [deleteDialog, setDeleteDialog] = useState<Campaign | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Filter campaigns
   const filteredCampaigns = campaigns.filter((campaign) => {
@@ -163,155 +178,192 @@ export default function CampaignsPage() {
       </Card>
 
       {/* Results count */}
-      <div className="text-sm text-gray-600">
-        {filteredCampaigns.length} {filteredCampaigns.length === 1 ? "campaign" : "campaigns"}
-      </div>
+      {!isLoading && campaigns.length > 0 && (
+        <div className="text-sm text-gray-600">
+          {filteredCampaigns.length} {filteredCampaigns.length === 1 ? "campaign" : "campaigns"}
+        </div>
+      )}
+
+      {/* Loading State */}
+      {isLoading && (
+        <Card>
+          <CardContent className="p-6">
+            <TableSkeleton rows={5} />
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Empty State - No campaigns at all */}
+      {!isLoading && campaigns.length === 0 && (
+        <Card>
+          <CardContent>
+            <EmptyState
+              icon={Megaphone}
+              title="No campaigns yet"
+              description="Create your first AI-powered campaign by importing assets from our AI platform."
+              action={{
+                label: "Create Campaign",
+                onClick: () => router.push("/dashboard/campaigns/create"),
+              }}
+            />
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Empty State - No filtered results */}
+      {!isLoading && campaigns.length > 0 && filteredCampaigns.length === 0 && (
+        <Card>
+          <CardContent>
+            <EmptyState
+              icon={SearchX}
+              title="No campaigns found"
+              description="Try adjusting your filters or search query to find what you're looking for."
+            />
+          </CardContent>
+        </Card>
+      )}
 
       {/* Campaigns Table */}
-      <Card>
-        <CardContent className="p-0">
-          <div className="overflow-x-auto scrollbar-thin">
-            <table className="w-full min-w-[1200px]">
-              <thead className="bg-gray-50 border-b border-gray-200">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t.campaigns.table.status}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t.campaigns.table.name}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t.campaigns.table.platform}
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t.campaigns.table.dailyBudget}
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t.campaigns.table.spent}
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t.campaigns.table.impressions}
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t.campaigns.table.clicks}
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t.campaigns.table.ctr}
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t.campaigns.table.conversions}
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t.campaigns.table.actions}
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {filteredCampaigns.map((campaign) => (
-                  <tr key={campaign.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {getStatusBadge(campaign.status)}
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm font-medium text-gray-900">{campaign.name}</div>
-                      <div className="text-xs text-gray-500">
-                        {formatDate(campaign.startDate)}
-                        {campaign.endDate && ` - ${formatDate(campaign.endDate)}`}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {getPlatformBadge(campaign.platform)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900">
-                      {formatCurrency(campaign.dailyBudget)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900">
-                      {formatCurrency(campaign.spent)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500">
-                      {formatNumber(campaign.impressions)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500">
-                      {formatNumber(campaign.clicks)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900">
-                      {formatPercentage(campaign.ctr)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900">
-                      {campaign.conversions}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex items-center justify-end gap-2">
-                        <Link href={`/dashboard/campaigns/${campaign.id}/assets`}>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            title="View Assets"
-                          >
-                            <ImageIcon className="w-4 h-4" />
-                          </Button>
-                        </Link>
-                        {campaign.status === "ACTIVE" ? (
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            onClick={() => handlePause(campaign.id, campaign.name)}
-                            title={t.campaigns.actions.pause}
-                          >
-                            <Pause className="w-4 h-4" />
-                          </Button>
-                        ) : campaign.status === "PAUSED" ? (
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            onClick={() => handleResume(campaign.id, campaign.name)}
-                            title={t.campaigns.actions.resume}
-                          >
-                            <Play className="w-4 h-4" />
-                          </Button>
-                        ) : null}
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => {
-                            setEditBudgetDialog(campaign);
-                            setNewBudget(campaign.dailyBudget.toString());
-                          }}
-                          title={t.campaigns.actions.editBudget}
-                        >
-                          <Edit2 className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => handleDuplicate(campaign.id, campaign.name)}
-                          title={t.campaigns.actions.duplicate}
-                        >
-                          <Copy className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => setDeleteDialog(campaign)}
-                          title={t.campaigns.actions.delete}
-                        >
-                          <Trash2 className="w-4 h-4 text-red-600" />
-                        </Button>
-                      </div>
-                    </td>
+      {!isLoading && filteredCampaigns.length > 0 && (
+        <Card>
+          <CardContent className="p-0">
+            <div className="overflow-x-auto scrollbar-thin">
+              <table className="w-full min-w-[1200px]">
+                <thead className="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t.campaigns.table.status}
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t.campaigns.table.name}
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t.campaigns.table.platform}
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t.campaigns.table.dailyBudget}
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t.campaigns.table.spent}
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t.campaigns.table.impressions}
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t.campaigns.table.clicks}
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t.campaigns.table.ctr}
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t.campaigns.table.conversions}
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t.campaigns.table.actions}
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {filteredCampaigns.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-gray-500">{t.common.loading}</p>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {filteredCampaigns.map((campaign) => (
+                    <tr key={campaign.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {getStatusBadge(campaign.status)}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-sm font-medium text-gray-900">{campaign.name}</div>
+                        <div className="text-xs text-gray-500">
+                          {formatDate(campaign.startDate)}
+                          {campaign.endDate && ` - ${formatDate(campaign.endDate)}`}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {getPlatformBadge(campaign.platform)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900">
+                        {formatCurrency(campaign.dailyBudget)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900">
+                        {formatCurrency(campaign.spent)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500">
+                        {formatNumber(campaign.impressions)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500">
+                        {formatNumber(campaign.clicks)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900">
+                        {formatPercentage(campaign.ctr)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900">
+                        {campaign.conversions}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div className="flex items-center justify-end gap-2">
+                          <Link href={`/dashboard/campaigns/${campaign.id}/assets`}>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              title="View Assets"
+                            >
+                              <ImageIcon className="w-4 h-4" />
+                            </Button>
+                          </Link>
+                          {campaign.status === "ACTIVE" ? (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => handlePause(campaign.id, campaign.name)}
+                              title={t.campaigns.actions.pause}
+                            >
+                              <Pause className="w-4 h-4" />
+                            </Button>
+                          ) : campaign.status === "PAUSED" ? (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => handleResume(campaign.id, campaign.name)}
+                              title={t.campaigns.actions.resume}
+                            >
+                              <Play className="w-4 h-4" />
+                            </Button>
+                          ) : null}
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => {
+                              setEditBudgetDialog(campaign);
+                              setNewBudget(campaign.dailyBudget.toString());
+                            }}
+                            title={t.campaigns.actions.editBudget}
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleDuplicate(campaign.id, campaign.name)}
+                            title={t.campaigns.actions.duplicate}
+                          >
+                            <Copy className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => setDeleteDialog(campaign)}
+                            title={t.campaigns.actions.delete}
+                          >
+                            <Trash2 className="w-4 h-4 text-red-600" />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          )}
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Edit Budget Dialog */}
       <Dialog open={!!editBudgetDialog} onClose={() => setEditBudgetDialog(null)}>
