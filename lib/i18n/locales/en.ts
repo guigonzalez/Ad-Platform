@@ -63,6 +63,245 @@ export const en = {
       subtitle: "Join thousands of marketers who save time with our platform",
     },
     footer: "© 2024 Ads Platform. Demo prototype for investor presentation.",
+    hero: {
+      title: "AI-Powered Creative Production",
+      titleHighlight: "at Scale",
+      subtitle: "Transform your creative workflow with intelligent automation. Produce high-quality ad creatives 10x faster.",
+      ctaPrimary: "Start Free Trial",
+      ctaSecondary: "See Your ROI",
+      trustBadge: "Trusted by 500+ marketing teams",
+    },
+    features2: {
+      title: "Why Choose",
+      titleHighlight: "ScaleBeam",
+      feature1: {
+        title: "AI-Powered Generation",
+        description: "Create hundreds of ad variations in minutes with our multi-AI orchestration system.",
+      },
+      feature2: {
+        title: "Automatic Quality Control",
+        description: "Visual QA ensures every creative meets brand standards before going live.",
+      },
+      feature3: {
+        title: "Multi-Platform Export",
+        description: "One-click export to Meta, Google, TikTok, and more with perfect formatting.",
+      },
+    },
+    roi: {
+      title: "Real Results from",
+      titleHighlight: "Real Clients",
+      metric1: {
+        value: "83%",
+        label: "Average gross margin",
+      },
+      metric2: {
+        value: "6-9 months",
+        label: "CAC Payback",
+      },
+      metric3: {
+        value: "<5%",
+        label: "Annual churn",
+      },
+      cta: "Calculate Your ROI",
+    },
+  },
+
+  // Pricing Page
+  pricing: {
+    nav: {
+      features: "Features",
+      roi: "ROI",
+      plans: "Plans",
+      login: "Log In",
+      getStarted: "Get Started",
+    },
+    hero: {
+      badge: "Simple and Transparent Pricing",
+      title: "Choose the Perfect Plan",
+      subtitle: "Start free and scale as you grow. All plans include a 14-day free trial.",
+    },
+    plans: {
+      starter: {
+        name: "Starter",
+        badge: "Best Price",
+        description: "For teams with creative automation",
+        price: "month",
+        setup: "Setup",
+        features: {
+          creatives: "Up to 300 creatives/month",
+          brands: "Maximum 1 brand",
+          orchestration: "Basic Multi-AI orchestration",
+          qa: "Automated visual QA",
+          templates: "Pre-configured templates",
+          integrations: "Essential integrations",
+          dashboard: "Performance dashboard",
+          support: "Email support",
+        },
+        cta: "Start Now",
+      },
+      professional: {
+        name: "Professional",
+        badge: "Most Popular",
+        description: "For agility with scalable growth",
+        price: "month",
+        setup: "Setup",
+        features: {
+          creatives: "Up to 750 creatives/month",
+          brands: "Maximum 3 brands",
+          includes: "Everything in Starter, plus:",
+          whiteLabel: "Complete white-label",
+          aiTraining: "Custom AI training",
+          integrations: "Advanced integrations (Meta, Google)",
+          workflows: "Custom workflows",
+          support: "Priority support",
+          training: "Monthly team training",
+        },
+        cta: "Request Demo",
+      },
+      agency: {
+        name: "Agency",
+        description: "For scalable agencies and focused production",
+        price: "month",
+        setup: "Setup",
+        features: {
+          creatives: "Up to 2,000 creatives/month",
+          brands: "Up to 10 brands",
+          includes: "Everything in Professional, plus:",
+          manager: "Dedicated account manager",
+          sla: "Premium SLA",
+          support: "24/7 support",
+          consulting: "Monthly strategic consulting",
+        },
+        cta: "Request Demo",
+      },
+      enterprise: {
+        name: "Enterprise",
+        price: "Custom",
+        setupCustom: "Custom pricing and setup",
+        description: "For custom solutions, compliance and dedicated infrastructure",
+        features: {
+          creatives: "Unlimited creatives",
+          brands: "Unlimited brands",
+          includes: "Everything in Agency, plus:",
+          infrastructure: "Dedicated infrastructure",
+          compliance: "Advanced compliance and security",
+          integrations: "Internal systems integration",
+          csm: "Dedicated Customer Success Manager",
+          roi: "Exclusive ROI analysis",
+          roadmap: "Priority roadmap",
+        },
+        cta: "Talk to Sales",
+      },
+    },
+    allPlansInclude: {
+      title: "All plans include:",
+      metric1: {
+        value: "83%",
+        label: "Average gross margin",
+      },
+      metric2: {
+        value: "6-9 months",
+        label: "CAC Payback",
+      },
+      metric3: {
+        value: "<5%",
+        label: "Annual churn",
+      },
+    },
+    faq: {
+      title: "Frequently Asked Questions",
+      subtitle: "Everything you need to know about our plans",
+      q1: {
+        question: "Can I change plans at any time?",
+        answer: "Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately.",
+      },
+      q2: {
+        question: "How does the 14-day free trial work?",
+        answer: "You can test all features of the Professional plan free for 14 days. No credit card required to start.",
+      },
+      q3: {
+        question: "What payment methods do you accept?",
+        answer: "We accept credit card, PIX, and corporate invoicing (Enterprise plans only).",
+      },
+      q4: {
+        question: "Can I cancel at any time?",
+        answer: "Yes, you can cancel your plan at any time without penalties or additional fees.",
+      },
+      q5: {
+        question: "Is there a discount for annual payment?",
+        answer: "Yes! We offer 20% off for annual payments on all paid plans.",
+      },
+    },
+    cta: {
+      title: "Ready to Get Started?",
+      subtitle: "Join hundreds of companies already transforming their creative production with AI",
+      button: "Start 14-Day Free Trial",
+    },
+    footer: "© 2025 ScaleBeam. All rights reserved.",
+  },
+
+  // ROI Calculator
+  roiCalculator: {
+    nav: {
+      features: "Features",
+      roi: "ROI",
+      plans: "Plans",
+      login: "Log In",
+      getStarted: "Get Started",
+    },
+    hero: {
+      title: "ROI Calculator",
+      subtitle: "See how much you can save by automating your creative production with ScaleBeam",
+    },
+    form: {
+      title: "Enter Your Current Information",
+      monthlyCreatives: {
+        label: "Monthly Creatives",
+        placeholder: "How many creatives do you produce per month?",
+      },
+      hoursPerCreative: {
+        label: "Hours per Creative",
+        placeholder: "Average hours to create one creative",
+      },
+      hourlyRate: {
+        label: "Hourly Rate (R$)",
+        placeholder: "Average cost per hour of your team",
+      },
+      teamSize: {
+        label: "Team Size",
+        placeholder: "Number of people in creative team",
+      },
+      calculate: "Calculate ROI",
+    },
+    results: {
+      title: "Your Savings with ScaleBeam",
+      currentCost: {
+        label: "Current Monthly Cost",
+        hours: "hours/month",
+      },
+      withScaleBeam: {
+        label: "With ScaleBeam",
+        hours: "hours/month",
+        reduction: "85% time reduction",
+      },
+      monthlySavings: {
+        label: "Monthly Savings",
+        netSavings: "after platform cost",
+      },
+      annualRoi: {
+        label: "Annual ROI",
+      },
+      payback: {
+        label: "Payback Period",
+        days: "days",
+      },
+    },
+    cta: {
+      title: "Ready to Start Saving?",
+      subtitle: "Join hundreds of companies already transforming their creative production",
+      button: "Start Free Trial",
+    },
+    footer: "© 2025 ScaleBeam. All rights reserved.",
   },
 
   // Dashboard

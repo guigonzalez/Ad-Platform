@@ -65,6 +65,245 @@ export const ptBR: TranslationKeys = {
       subtitle: "Junte-se a milhares de profissionais de marketing que economizam tempo com nossa plataforma",
     },
     footer: "© 2024 Ads Platform. Protótipo demo para apresentação a investidores.",
+    hero: {
+      title: "Produção Criativa com IA",
+      titleHighlight: "em Escala",
+      subtitle: "Transforme seu fluxo criativo com automação inteligente. Produza criativos de alta qualidade 10x mais rápido.",
+      ctaPrimary: "Começar Teste Grátis",
+      ctaSecondary: "Veja Seu ROI",
+      trustBadge: "Confiado por mais de 500 equipes de marketing",
+    },
+    features2: {
+      title: "Por Que Escolher",
+      titleHighlight: "ScaleBeam",
+      feature1: {
+        title: "Geração com IA",
+        description: "Crie centenas de variações de anúncios em minutos com nosso sistema de orquestração multi-IA.",
+      },
+      feature2: {
+        title: "Controle de Qualidade Automático",
+        description: "QA visual garante que cada criativo atenda aos padrões da marca antes de ir ao ar.",
+      },
+      feature3: {
+        title: "Exportação Multi-Plataforma",
+        description: "Exportação com um clique para Meta, Google, TikTok e mais com formatação perfeita.",
+      },
+    },
+    roi: {
+      title: "Resultados Reais de",
+      titleHighlight: "Clientes Reais",
+      metric1: {
+        value: "83%",
+        label: "Margem bruta média",
+      },
+      metric2: {
+        value: "6-9 meses",
+        label: "CAC Payback",
+      },
+      metric3: {
+        value: "<5%",
+        label: "Churn anual",
+      },
+      cta: "Calcule Seu ROI",
+    },
+  },
+
+  // Pricing Page
+  pricing: {
+    nav: {
+      features: "Recursos",
+      roi: "ROI",
+      plans: "Planos",
+      login: "Entrar",
+      getStarted: "Começar Agora",
+    },
+    hero: {
+      badge: "Preços Simples e Transparentes",
+      title: "Escolha o Plano Ideal",
+      subtitle: "Comece gratuitamente e escale conforme seu crescimento. Todos os planos incluem 14 dias de teste grátis.",
+    },
+    plans: {
+      starter: {
+        name: "Starter",
+        badge: "Melhor preço",
+        description: "Para equipes com automação criativa",
+        price: "mês",
+        setup: "Setup",
+        features: {
+          creatives: "Até 300 criativos/mês",
+          brands: "Máximo 1 marca",
+          orchestration: "Orquestração Multi-IA básica",
+          qa: "QA Visual automatizado",
+          templates: "Templates pré-configurados",
+          integrations: "Integrações essenciais",
+          dashboard: "Dashboard de performance",
+          support: "Suporte por email",
+        },
+        cta: "Começar Agora",
+      },
+      professional: {
+        name: "Professional",
+        badge: "Mais Popular",
+        description: "Para agilidade com crescimento escalável",
+        price: "mês",
+        setup: "Setup",
+        features: {
+          creatives: "Até 750 criativos/mês",
+          brands: "Máximo 3 marcas",
+          includes: "Tudo do Starter, mais:",
+          whiteLabel: "White-label completo",
+          aiTraining: "Treinamento de IA personalizado",
+          integrations: "Integrações avançadas (Meta, Google)",
+          workflows: "Workflows personalizados",
+          support: "Suporte prioritário",
+          training: "Treinamento mensal do time",
+        },
+        cta: "Solicitar Demo",
+      },
+      agency: {
+        name: "Agency",
+        description: "Para agências escaláveis e produção focada",
+        price: "mês",
+        setup: "Setup",
+        features: {
+          creatives: "Até 2.000 criativos/mês",
+          brands: "Até 10 marcas",
+          includes: "Tudo do Professional, mais:",
+          manager: "Gerente de conta dedicado",
+          sla: "SLA premium",
+          support: "Suporte 24/7",
+          consulting: "Consultoria estratégica mensal",
+        },
+        cta: "Solicitar Demo",
+      },
+      enterprise: {
+        name: "Enterprise",
+        price: "Customizado",
+        setupCustom: "Preços e setup personalizados",
+        description: "Para soluções sob medida, compliance e infraestrutura dedicada",
+        features: {
+          creatives: "Criativos ilimitados",
+          brands: "Marcas ilimitadas",
+          includes: "Tudo da Agency, mais:",
+          infrastructure: "Infraestrutura dedicada",
+          compliance: "Compliance e segurança avançada",
+          integrations: "Integração com sistemas internos",
+          csm: "Customer Success Manager dedicado",
+          roi: "Análise de ROI exclusiva",
+          roadmap: "Roadmap prioritário",
+        },
+        cta: "Falar com Vendas",
+      },
+    },
+    allPlansInclude: {
+      title: "Todos os planos incluem:",
+      metric1: {
+        value: "83%",
+        label: "Margem bruta média",
+      },
+      metric2: {
+        value: "6-9 meses",
+        label: "CAC Payback",
+      },
+      metric3: {
+        value: "<5%",
+        label: "Churn anual",
+      },
+    },
+    faq: {
+      title: "Perguntas Frequentes",
+      subtitle: "Tudo que você precisa saber sobre nossos planos",
+      q1: {
+        question: "Posso mudar de plano a qualquer momento?",
+        answer: "Sim! Você pode fazer upgrade ou downgrade do seu plano a qualquer momento. As alterações entram em vigor imediatamente.",
+      },
+      q2: {
+        question: "Como funciona o teste grátis de 14 dias?",
+        answer: "Você pode testar todos os recursos do plano Professional gratuitamente por 14 dias. Não é necessário cartão de crédito para começar.",
+      },
+      q3: {
+        question: "Quais formas de pagamento vocês aceitam?",
+        answer: "Aceitamos cartão de crédito, PIX e faturamento corporativo (apenas para planos Enterprise).",
+      },
+      q4: {
+        question: "Posso cancelar a qualquer momento?",
+        answer: "Sim, você pode cancelar seu plano a qualquer momento sem multas ou taxas adicionais.",
+      },
+      q5: {
+        question: "Há desconto para pagamento anual?",
+        answer: "Sim! Oferecemos 20% de desconto para pagamentos anuais em todos os planos pagos.",
+      },
+    },
+    cta: {
+      title: "Pronto para Começar?",
+      subtitle: "Junte-se a centenas de empresas que já estão transformando sua produção criativa com IA",
+      button: "Começar Teste Grátis de 14 Dias",
+    },
+    footer: "© 2025 ScaleBeam. Todos os direitos reservados.",
+  },
+
+  // ROI Calculator
+  roiCalculator: {
+    nav: {
+      features: "Recursos",
+      roi: "ROI",
+      plans: "Planos",
+      login: "Entrar",
+      getStarted: "Começar Agora",
+    },
+    hero: {
+      title: "Calculadora de ROI",
+      subtitle: "Veja quanto você pode economizar automatizando sua produção criativa com ScaleBeam",
+    },
+    form: {
+      title: "Insira Suas Informações Atuais",
+      monthlyCreatives: {
+        label: "Criativos Mensais",
+        placeholder: "Quantos criativos você produz por mês?",
+      },
+      hoursPerCreative: {
+        label: "Horas por Criativo",
+        placeholder: "Média de horas para criar um criativo",
+      },
+      hourlyRate: {
+        label: "Custo por Hora (R$)",
+        placeholder: "Custo médio por hora do seu time",
+      },
+      teamSize: {
+        label: "Tamanho do Time",
+        placeholder: "Número de pessoas no time criativo",
+      },
+      calculate: "Calcular ROI",
+    },
+    results: {
+      title: "Sua Economia com ScaleBeam",
+      currentCost: {
+        label: "Custo Mensal Atual",
+        hours: "horas/mês",
+      },
+      withScaleBeam: {
+        label: "Com ScaleBeam",
+        hours: "horas/mês",
+        reduction: "85% de redução de tempo",
+      },
+      monthlySavings: {
+        label: "Economia Mensal",
+        netSavings: "após custo da plataforma",
+      },
+      annualRoi: {
+        label: "ROI Anual",
+      },
+      payback: {
+        label: "Período de Retorno",
+        days: "dias",
+      },
+    },
+    cta: {
+      title: "Pronto para Começar a Economizar?",
+      subtitle: "Junte-se a centenas de empresas que já estão transformando sua produção criativa",
+      button: "Começar Teste Grátis",
+    },
+    footer: "© 2025 ScaleBeam. Todos os direitos reservados.",
   },
 
   // Dashboard
