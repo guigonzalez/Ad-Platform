@@ -21,7 +21,8 @@ import {
   Copy,
   Trash2,
   MoreVertical,
-  Filter
+  Filter,
+  Image as ImageIcon,
 } from "lucide-react";
 import type { Campaign } from "@/lib/mock-data";
 
@@ -241,6 +242,15 @@ export default function CampaignsPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center justify-end gap-2">
+                        <Link href={`/dashboard/campaigns/${campaign.id}/assets`}>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            title="View Assets"
+                          >
+                            <ImageIcon className="w-4 h-4" />
+                          </Button>
+                        </Link>
                         {campaign.status === "ACTIVE" ? (
                           <Button
                             size="sm"
