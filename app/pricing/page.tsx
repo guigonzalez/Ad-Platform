@@ -83,15 +83,11 @@ export default function PricingPage() {
               <ul className="space-y-2 mb-6 text-sm">
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Pesquisas até 300 pesquisas/mês</span>
+                  <span className="text-gray-700">Até 300 criativos/mês</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
                   <span className="text-gray-700">Máximo 1 marca</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Suporte Standard</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
@@ -154,7 +150,7 @@ export default function PricingPage() {
               <ul className="space-y-2 mb-6 text-sm">
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Pesquisas até 750 pesquisas/mês</span>
+                  <span className="text-gray-700">Até 750 criativos/mês</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
@@ -162,11 +158,7 @@ export default function PricingPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Suporte Priority</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Tudo do Starter, mas:</span>
+                  <span className="text-gray-700">Tudo do Starter, mais:</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
@@ -174,15 +166,15 @@ export default function PricingPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Custom AI training</span>
+                  <span className="text-gray-700">Treinamento de IA personalizado</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Integração avançada (Mídia, Google)</span>
+                  <span className="text-gray-700">Integrações avançadas (Meta, Google)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Integração avançadas workflows</span>
+                  <span className="text-gray-700">Workflows personalizados</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
@@ -190,7 +182,7 @@ export default function PricingPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Treinamento mensal do time-sucesso</span>
+                  <span className="text-gray-700">Treinamento mensal do time</span>
                 </li>
               </ul>
 
@@ -223,27 +215,23 @@ export default function PricingPage() {
               <ul className="space-y-2 mb-6 text-sm">
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Pesquisas até 2.000 pesquisas/mês</span>
+                  <span className="text-gray-700">Até 2.000 criativos/mês</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Máximo 10 marcas</span>
+                  <span className="text-gray-700">Até 10 marcas</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Suporte Dedicated</span>
+                  <span className="text-gray-700">Tudo do Professional, mais:</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Tudo do Professional, mas:</span>
+                  <span className="text-gray-700">Gerente de conta dedicado</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Gerente de acesso dedicado</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">SLA avançado</span>
+                  <span className="text-gray-700">SLA premium</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
@@ -273,25 +261,25 @@ export default function PricingPage() {
                   <div className="flex items-baseline gap-2">
                     <span className="text-3xl font-black text-gray-900">Customizado</span>
                   </div>
-                  <div className="text-sm text-gray-700 mt-1 font-medium">
-                    + Setup: R$ 125.000
+                  <div className="text-sm text-gray-600 mt-1">
+                    Preços e setup personalizados
                   </div>
                 </div>
-                <p className="text-gray-600 text-xs mt-2">Para a solução sob medida, compliance e infraestrutura dedicada</p>
+                <p className="text-gray-600 text-xs mt-2">Para soluções sob medida, compliance e infraestrutura dedicada</p>
               </div>
 
               <ul className="space-y-2 mb-6 text-sm">
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Requisitos limitados</span>
+                  <span className="text-gray-700">Criativos ilimitados</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Máximo Suporte 24/7</span>
+                  <span className="text-gray-700">Marcas ilimitadas</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Tudo da Agency, mas:</span>
+                  <span className="text-gray-700">Tudo da Agency, mais:</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
@@ -303,15 +291,15 @@ export default function PricingPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Integração sistemas</span>
+                  <span className="text-gray-700">Integração com sistemas internos</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">CSM dedicado</span>
+                  <span className="text-gray-700">Customer Success Manager dedicado</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">ROI tracking exclusivity</span>
+                  <span className="text-gray-700">Análise de ROI exclusiva</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
