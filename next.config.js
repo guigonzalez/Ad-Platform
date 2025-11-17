@@ -1,12 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export',
   images: {
     unoptimized: true,
   },
-  basePath: process.env.NODE_ENV === 'production' ? '/Ad-Platform' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/Ad-Platform/' : '',
+  // Temporarily disabled static export due to dynamic routes
+  // output: 'export',
+  // basePath: process.env.NODE_ENV === 'production' ? '/Ad-Platform' : '',
+  // assetPrefix: process.env.NODE_ENV === 'production' ? '/Ad-Platform/' : '',
 };
 
 export default nextConfig;
