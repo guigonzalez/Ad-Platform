@@ -25,6 +25,7 @@ import { useAuthStore } from "@/lib/auth-store";
 import { useNotifications } from "@/lib/notifications-store";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { NotificationCenter } from "@/components/notifications/notification-center";
+import { Logo } from "@/components/ui/logo";
 
 export default function DashboardLayout({
   children,
@@ -101,12 +102,7 @@ export default function DashboardLayout({
           "flex items-center justify-between h-16 border-b-2 border-black transition-all",
           sidebarCollapsed ? "px-4 justify-center" : "px-6"
         )}>
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-purple-500 rounded-xl border-2 border-black neo-shadow-sm flex items-center justify-center flex-shrink-0">
-              <TrendingUp className="w-5 h-5 text-white" />
-            </div>
-            {!sidebarCollapsed && <span className="font-bold text-lg whitespace-nowrap">Ads Platform</span>}
-          </Link>
+          {!sidebarCollapsed && <Logo />}
           {!sidebarCollapsed && (
             <button
               onClick={() => setSidebarOpen(false)}

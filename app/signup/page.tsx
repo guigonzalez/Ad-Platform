@@ -7,7 +7,8 @@ import { useAuthStore } from "@/lib/auth-store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, Sparkles, Check } from "lucide-react";
+import { Loader2, Check } from "lucide-react";
+import { Logo } from "@/components/ui/logo";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -38,11 +39,8 @@ export default function SignupPage() {
         {/* Left Side - Benefits */}
         <div className="hidden lg:flex flex-col justify-center">
           <div className="mb-8">
-            <div className="inline-flex items-center gap-2 mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              <h1 className="text-3xl font-black text-gray-900">ScaleBeam</h1>
+            <div className="mb-4">
+              <Logo />
             </div>
             <h2 className="text-4xl font-black text-gray-900 mb-4">
               Start running smarter ad campaigns today
