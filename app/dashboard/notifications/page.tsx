@@ -66,7 +66,7 @@ export default function NotificationsPage() {
 
         <div className="flex items-center gap-3">
           {unreadCount > 0 && (
-            <Button variant="outline" size="sm" onClick={markAllAsRead}>
+            <Button variant="default" size="sm" onClick={markAllAsRead}>
               <CheckCheck className="w-4 h-4 mr-2" />
               Mark all as read
             </Button>
@@ -240,7 +240,7 @@ export default function NotificationsPage() {
                         <Link href={notification.actionUrl}>
                           <Button
                             size="sm"
-                            variant="outline"
+                            variant="default"
                             onClick={() => markAsRead(notification.id)}
                           >
                             View Details

@@ -87,7 +87,7 @@ export default function Home() {
                 </Button>
               </Link>
               <Link href="/login">
-                <Button variant="outline" className="text-lg px-8 py-6">
+                <Button variant="default" className="text-lg px-8 py-6">
                   {t.landing.viewDemo}
                 </Button>
               </Link>
@@ -251,7 +251,7 @@ export default function Home() {
             </p>
             <Link href="/signup">
               <Button
-                variant="outline"
+                variant="default"
                 className="bg-white text-purple-600 hover:bg-gray-100 border-2 border-black text-lg px-8 py-6 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
               >
                 Start Free Trial
