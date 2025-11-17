@@ -73,9 +73,8 @@ export default function PricingPage() {
                     <span className="text-4xl font-black text-gray-900">R$ 6.000</span>
                     <span className="text-gray-600">/mês</span>
                   </div>
-                  <div className="text-sm text-gray-500 mt-1">
-                    <span className="line-through">Setup: R$ 17.500</span>
-                    <span className="text-green-600 font-bold ml-2">Grátis</span>
+                  <div className="text-sm text-gray-700 mt-1 font-medium">
+                    + Setup: R$ 17.500
                   </div>
                 </div>
                 <p className="text-gray-600 text-xs mt-2">Para equipes com automação criativa</p>
@@ -145,9 +144,8 @@ export default function PricingPage() {
                     <span className="text-4xl font-black text-gray-900">R$ 12.500</span>
                     <span className="text-gray-600">/mês</span>
                   </div>
-                  <div className="text-sm text-gray-500 mt-1">
-                    <span className="line-through">Setup: R$ 42.500</span>
-                    <span className="text-green-600 font-bold ml-2">Grátis</span>
+                  <div className="text-sm text-gray-700 mt-1 font-medium">
+                    + Setup: R$ 42.500
                   </div>
                 </div>
                 <p className="text-gray-600 text-xs mt-2">Para agilidade com crescimento escalável</p>
@@ -215,9 +213,8 @@ export default function PricingPage() {
                     <span className="text-4xl font-black text-gray-900">R$ 25.000</span>
                     <span className="text-gray-600">/mês</span>
                   </div>
-                  <div className="text-sm text-gray-500 mt-1">
-                    <span className="line-through">Setup: R$ 85.000</span>
-                    <span className="text-green-600 font-bold ml-2">Grátis</span>
+                  <div className="text-sm text-gray-700 mt-1 font-medium">
+                    + Setup: R$ 85.000
                   </div>
                 </div>
                 <p className="text-gray-600 text-xs mt-2">Para agências escaláveis e produção focada</p>
@@ -276,9 +273,8 @@ export default function PricingPage() {
                   <div className="flex items-baseline gap-2">
                     <span className="text-3xl font-black text-gray-900">Customizado</span>
                   </div>
-                  <div className="text-sm text-gray-500 mt-1">
-                    <span className="line-through">Setup: R$ 125.000</span>
-                    <span className="text-green-600 font-bold ml-2">Grátis</span>
+                  <div className="text-sm text-gray-700 mt-1 font-medium">
+                    + Setup: R$ 125.000
                   </div>
                 </div>
                 <p className="text-gray-600 text-xs mt-2">Para a solução sob medida, compliance e infraestrutura dedicada</p>
