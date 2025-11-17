@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -14,6 +14,9 @@ import {
   BarChart3,
   Globe,
   Shield,
+  Users,
+  Star,
+  X,
 } from "lucide-react";
 import { useTranslation } from "@/lib/i18n/context";
 import { useAuthStore } from "@/lib/auth-store";
@@ -79,19 +82,12 @@ export default function Home() {
             <p className="text-xl text-gray-700 mb-8 leading-relaxed">
               {t.landing.subtitle}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/signup">
-                <Button variant="primary" className="text-lg px-8 py-6">
-                  {t.landing.cta}
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </Link>
-              <Link href="/login">
-                <Button variant="default" className="text-lg px-8 py-6">
-                  {t.landing.viewDemo}
-                </Button>
-              </Link>
-            </div>
+            <Link href="/signup">
+              <Button variant="primary" className="text-lg px-8 py-6 inline-flex">
+                {t.landing.cta}
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </Link>
 
             {/* Trust badges */}
             <div className="mt-12 flex items-center gap-6 flex-wrap">
@@ -239,6 +235,111 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Pricing */}
+      <section className="container mx-auto px-4 py-20 bg-gradient-to-br from-purple-50 to-pink-50">
+        <div className="text-center mb-16">
+          <Badge className="mb-6 bg-purple-100 text-purple-900 border-2 border-purple-500">
+            <Star className="w-3 h-3 mr-1" />
+            Simple, Transparent Pricing
+          </Badge>
+          <h2 className="text-4xl font-black text-gray-900 mb-4">Choose your plan</h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Start free and scale as you grow. All plans include 14-day free trial.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {/* Free Plan */}
+          <PricingCard
+            name="Free"
+            price="$0"
+            period="forever"
+            description="Perfect for testing and small projects"
+            features={[
+              "Up to 3 campaigns",
+              "1 team member",
+              "Basic analytics",
+              "Email support",
+              "2 platforms (Meta & Google)",
+            ]}
+            cta="Start Free"
+            href="/signup"
+            popular={false}
+          />
+
+          {/* Professional Plan */}
+          <PricingCard
+            name="Professional"
+            price="$99"
+            period="per month"
+            description="For growing businesses and agencies"
+            features={[
+              "Unlimited campaigns",
+              "Up to 5 team members",
+              "Advanced analytics",
+              "Priority support",
+              "AI asset generation",
+              "Automation rules",
+              "Custom reporting",
+            ]}
+            cta="Start Free Trial"
+            href="/signup"
+            popular={true}
+          />
+
+          {/* Enterprise Plan */}
+          <PricingCard
+            name="Enterprise"
+            price="Custom"
+            period="contact us"
+            description="For large teams and corporations"
+            features={[
+              "Everything in Professional",
+              "Unlimited team members",
+              "Dedicated account manager",
+              "24/7 phone support",
+              "Corporate billing & invoicing",
+              "Custom integrations",
+              "SLA guarantee",
+            ]}
+            cta="Contact Sales"
+            href="/signup"
+            popular={false}
+          />
+        </div>
+      </section>
+
+      {/* Social Proof */}
+      <section className="container mx-auto px-4 py-20">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-black text-gray-900 mb-4">Trusted by marketing teams</h2>
+          <p className="text-xl text-gray-600">
+            Join hundreds of companies automating their ad campaigns
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <TestimonialCard
+            quote="AdsPlatform cut our campaign management time by 70%. The AI suggestions are incredibly accurate."
+            author="Sarah Johnson"
+            role="Marketing Director"
+            company="TechCorp"
+          />
+          <TestimonialCard
+            quote="Finally, a platform that actually understands both Meta and Google Ads. Game changer for our agency."
+            author="Michael Chen"
+            role="CEO"
+            company="Digital Agency Pro"
+          />
+          <TestimonialCard
+            quote="The automation rules saved us thousands in wasted ad spend. ROI improved by 45% in the first month."
+            author="Amanda Silva"
+            role="Growth Manager"
+            company="E-commerce Plus"
+          />
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="container mx-auto px-4 py-20">
         <Card className="bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
@@ -326,6 +427,110 @@ function StepCard({
         <div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
           <p className="text-gray-600">{description}</p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function PricingCard({
+  name,
+  price,
+  period,
+  description,
+  features,
+  cta,
+  href,
+  popular,
+}: {
+  name: string;
+  price: string;
+  period: string;
+  description: string;
+  features: string[];
+  cta: string;
+  href: string;
+  popular: boolean;
+}) {
+  return (
+    <Card
+      className={`bg-white border-2 border-black ${
+        popular
+          ? "shadow-[8px_8px_0px_0px_rgba(139,92,246,1)] ring-4 ring-purple-500"
+          : "shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+      } hover:translate-x-[2px] hover:translate-y-[2px] transition-all relative`}
+    >
+      {popular && (
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+          <Badge className="bg-purple-500 text-white border-2 border-black px-4 py-1">
+            <Star className="w-3 h-3 mr-1" />
+            Most Popular
+          </Badge>
+        </div>
+      )}
+      <CardContent className="p-8">
+        <div className="text-center mb-6">
+          <h3 className="text-2xl font-black text-gray-900 mb-2">{name}</h3>
+          <div className="mb-2">
+            <span className="text-5xl font-black text-gray-900">{price}</span>
+            {price !== "Custom" && <span className="text-gray-600 ml-2">/{period}</span>}
+            {price === "Custom" && <span className="text-gray-600 text-xl ml-2">{period}</span>}
+          </div>
+          <p className="text-gray-600 text-sm">{description}</p>
+        </div>
+
+        <ul className="space-y-3 mb-8">
+          {features.map((feature, index) => (
+            <li key={index} className="flex items-start gap-2">
+              <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+              <span className="text-gray-700">{feature}</span>
+            </li>
+          ))}
+        </ul>
+
+        <Link href={href}>
+          <Button
+            variant={popular ? "primary" : "default"}
+            className="w-full"
+            size="lg"
+          >
+            {cta}
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
+        </Link>
+      </CardContent>
+    </Card>
+  );
+}
+
+function TestimonialCard({
+  quote,
+  author,
+  role,
+  company,
+}: {
+  quote: string;
+  author: string;
+  role: string;
+  company: string;
+}) {
+  return (
+    <Card className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
+      <CardContent className="p-6">
+        <div className="flex gap-1 mb-4">
+          {[...Array(5)].map((_, i) => (
+            <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+          ))}
+        </div>
+        <p className="text-gray-700 mb-6 leading-relaxed italic">"{quote}"</p>
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full border-2 border-black flex items-center justify-center text-white font-bold">
+            {author.split(" ").map((n) => n[0]).join("")}
+          </div>
+          <div>
+            <p className="font-bold text-gray-900">{author}</p>
+            <p className="text-sm text-gray-600">{role} at {company}</p>
+          </div>
         </div>
       </CardContent>
     </Card>
