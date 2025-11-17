@@ -18,6 +18,20 @@ export interface Campaign {
   cpc: number; // dollars
   startDate: string;
   endDate?: string;
+  groupId?: string; // Optional: ID of the campaign group this campaign belongs to
+}
+
+export interface CampaignGroup {
+  id: string;
+  name: string;
+  description?: string;
+  status: CampaignStatus;
+  totalBudget: number; // Total budget for the entire group
+  dailyBudgetLimit: number; // Shared daily budget limit across all campaigns
+  spent: number; // Total spent across all campaigns
+  campaignIds: string[]; // IDs of campaigns in this group
+  createdAt: string;
+  objective: CampaignObjective; // Primary objective for the group
 }
 
 export interface DailyMetric {
@@ -92,13 +106,14 @@ export const mockCampaigns: Campaign[] = [
     cpc: 0.61,
     startDate: "2024-01-15",
     endDate: "2024-02-29",
+    groupId: "group-1",
   },
   {
     id: "2",
-    name: "Brand Awareness - Google Display",
+    name: "Summer Sale 2024 - Google Display",
     platform: "GOOGLE",
     status: "ACTIVE",
-    objective: "AWARENESS",
+    objective: "SALES",
     budget: 3000,
     dailyBudget: 100,
     spent: 1850,
@@ -108,13 +123,14 @@ export const mockCampaigns: Campaign[] = [
     ctr: 0.60,
     cpc: 0.60,
     startDate: "2024-01-20",
+    groupId: "group-1",
   },
   {
     id: "3",
-    name: "Lead Generation - Search Ads",
-    platform: "GOOGLE",
+    name: "Summer Sale 2024 - Instagram Stories",
+    platform: "META",
     status: "ACTIVE",
-    objective: "LEADS",
+    objective: "SALES",
     budget: 4500,
     dailyBudget: 180,
     spent: 2940,
@@ -124,13 +140,14 @@ export const mockCampaigns: Campaign[] = [
     ctr: 3.29,
     cpc: 1.05,
     startDate: "2024-01-10",
+    groupId: "group-1",
   },
   {
     id: "4",
-    name: "Product Launch - Meta Stories",
+    name: "Q1 Lead Gen - Meta Stories",
     platform: "META",
     status: "ACTIVE",
-    objective: "TRAFFIC",
+    objective: "LEADS",
     budget: 2500,
     dailyBudget: 80,
     spent: 1680,
@@ -140,13 +157,14 @@ export const mockCampaigns: Campaign[] = [
     ctr: 2.40,
     cpc: 0.39,
     startDate: "2024-01-25",
+    groupId: "group-2",
   },
   {
     id: "5",
-    name: "Retargeting Campaign - All Platforms",
-    platform: "META",
-    status: "PAUSED",
-    objective: "SALES",
+    name: "Q1 Lead Gen - Google Search",
+    platform: "GOOGLE",
+    status: "ACTIVE",
+    objective: "LEADS",
     budget: 1800,
     dailyBudget: 60,
     spent: 920,
@@ -156,13 +174,14 @@ export const mockCampaigns: Campaign[] = [
     ctr: 1.50,
     cpc: 0.67,
     startDate: "2024-01-12",
+    groupId: "group-2",
   },
   {
     id: "6",
-    name: "Holiday Special - Shopping Ads",
+    name: "Holiday Brand - Google Shopping",
     platform: "GOOGLE",
-    status: "ENDED",
-    objective: "SALES",
+    status: "PAUSED",
+    objective: "AWARENESS",
     budget: 8000,
     dailyBudget: 200,
     spent: 7950,
@@ -173,13 +192,14 @@ export const mockCampaigns: Campaign[] = [
     cpc: 0.61,
     startDate: "2023-12-01",
     endDate: "2023-12-31",
+    groupId: "group-3",
   },
   {
     id: "7",
-    name: "App Install Campaign - Meta",
+    name: "Holiday Brand - Meta Feed",
     platform: "META",
-    status: "ACTIVE",
-    objective: "TRAFFIC",
+    status: "PAUSED",
+    objective: "AWARENESS",
     budget: 3500,
     dailyBudget: 120,
     spent: 2100,
@@ -189,13 +209,14 @@ export const mockCampaigns: Campaign[] = [
     ctr: 2.80,
     cpc: 0.23,
     startDate: "2024-01-18",
+    groupId: "group-3",
   },
   {
     id: "8",
-    name: "Local Service Ads - Google",
+    name: "Holiday Brand - YouTube Video",
     platform: "GOOGLE",
-    status: "ACTIVE",
-    objective: "LEADS",
+    status: "PAUSED",
+    objective: "AWARENESS",
     budget: 2200,
     dailyBudget: 75,
     spent: 1350,
@@ -205,6 +226,7 @@ export const mockCampaigns: Campaign[] = [
     ctr: 2.00,
     cpc: 1.41,
     startDate: "2024-01-22",
+    groupId: "group-3",
   },
   {
     id: "9",
@@ -588,3 +610,43 @@ export const mockOrganization: Organization = {
   members: mockTeamMembers,
   connectedAccounts: mockConnectedAccounts,
 };
+
+// Mock Campaign Groups
+export const mockCampaignGroups: CampaignGroup[] = [
+  {
+    id: "group-1",
+    name: "Summer Sale 2024 - Multi-Platform",
+    description: "Coordinated summer sale campaign across Meta and Google with shared budget",
+    status: "ACTIVE",
+    totalBudget: 15000,
+    dailyBudgetLimit: 500,
+    spent: 8420,
+    campaignIds: ["1", "2", "3"],
+    createdAt: "2024-01-15",
+    objective: "SALES",
+  },
+  {
+    id: "group-2",
+    name: "Q1 Lead Generation",
+    description: "Multi-asset lead generation campaigns for Q1",
+    status: "ACTIVE",
+    totalBudget: 12000,
+    dailyBudgetLimit: 400,
+    spent: 6890,
+    campaignIds: ["4", "5"],
+    createdAt: "2024-01-01",
+    objective: "LEADS",
+  },
+  {
+    id: "group-3",
+    name: "Brand Awareness - Holiday",
+    description: "Holiday season brand awareness across all channels",
+    status: "PAUSED",
+    totalBudget: 20000,
+    dailyBudgetLimit: 650,
+    spent: 12340,
+    campaignIds: ["6", "7", "8"],
+    createdAt: "2023-11-01",
+    objective: "AWARENESS",
+  },
+];

@@ -26,6 +26,8 @@ import {
   Zap,
   Type,
   Video,
+  FolderKanban,
+  Plus,
 } from "lucide-react";
 import type { Platform, CampaignObjective } from "@/lib/mock-data";
 import type { CreativeAsset } from "@/lib/types/assets";
@@ -63,6 +65,10 @@ interface FormData {
   cta: string;
   termsAccepted: boolean;
   aiGenerated: boolean;
+  groupId: string | null;
+  createNewGroup: boolean;
+  newGroupName: string;
+  newGroupDailyBudgetLimit: number;
 }
 
 export default function CreateCampaignPage() {
@@ -70,6 +76,9 @@ export default function CreateCampaignPage() {
   const { showToast } = useToast();
   const router = useRouter();
   const createCampaign = useStore((state) => state.createCampaign);
+  const createCampaignGroup = useStore((state) => state.createCampaignGroup);
+  const assignCampaignToGroup = useStore((state) => state.assignCampaignToGroup);
+  const campaignGroups = useStore((state) => state.campaignGroups);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [aiMetadata, setAiMetadata] = useState<AIMetadata | null>(null);
@@ -92,6 +101,10 @@ export default function CreateCampaignPage() {
     cta: "",
     termsAccepted: false,
     aiGenerated: false,
+    groupId: null,
+    createNewGroup: false,
+    newGroupName: "",
+    newGroupDailyBudgetLimit: 0,
   });
 
   const updateForm = (updates: Partial<FormData>) => {
@@ -130,12 +143,33 @@ export default function CreateCampaignPage() {
   };
 
   const handleSubmit = () => {
-    // Create campaign for each platform
-    formData.platform.forEach((platform) => {
-      createCampaign({
-        name: formData.name,
-        platform,
+    let finalGroupId = formData.groupId;
+
+    // Create new group if requested
+    if (formData.createNewGroup && formData.newGroupName) {
+      const totalBudget = formData.newGroupDailyBudgetLimit * 30; // Estimate monthly budget
+      createCampaignGroup({
+        name: formData.newGroupName,
+        description: `Campaign group for ${formData.name}`,
         status: "ACTIVE",
+        totalBudget,
+        dailyBudgetLimit: formData.newGroupDailyBudgetLimit,
+        campaignIds: [],
+        objective: formData.objective,
+      });
+
+      // Get the newly created group ID (it will be the last one in the array)
+      const groups = useStore.getState().campaignGroups;
+      finalGroupId = groups[groups.length - 1]?.id || null;
+    }
+
+    // Create campaign for each platform
+    const createdCampaignIds: string[] = [];
+    formData.platform.forEach((platform) => {
+      const campaignData = {
+        name: `${formData.name}${formData.platform.length > 1 ? ` - ${platform}` : ''}`,
+        platform,
+        status: "ACTIVE" as const,
         objective: formData.objective,
         budget: formData.dailyBudget * 30,
         dailyBudget: formData.dailyBudget,
@@ -147,12 +181,35 @@ export default function CreateCampaignPage() {
         cpc: 0,
         startDate: formData.startDate,
         endDate: formData.endDate || undefined,
-      });
+        groupId: finalGroupId || undefined,
+      };
+
+      createCampaign(campaignData);
+
+      // Store the ID for group assignment
+      const campaigns = useStore.getState().campaigns;
+      const newCampaignId = campaigns[campaigns.length - 1]?.id;
+      if (newCampaignId) {
+        createdCampaignIds.push(newCampaignId);
+      }
     });
 
+    // Assign campaigns to group if group was selected or created
+    if (finalGroupId) {
+      createdCampaignIds.forEach((campaignId) => {
+        assignCampaignToGroup(campaignId, finalGroupId);
+      });
+    }
+
     const platformCount = formData.platform.length;
+    const groupMessage = formData.createNewGroup
+      ? ` and added to new group "${formData.newGroupName}"`
+      : finalGroupId
+      ? ` and added to campaign group`
+      : '';
+
     showToast(
-      `Campaign "${formData.name}" created successfully on ${platformCount} platform${platformCount > 1 ? 's' : ''}`,
+      `Campaign "${formData.name}" created successfully on ${platformCount} platform${platformCount > 1 ? 's' : ''}${groupMessage}`,
       "success"
     );
 
@@ -438,6 +495,124 @@ export default function CreateCampaignPage() {
                   />
                 </div>
               </div>
+
+              {/* Campaign Groups */}
+              <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-black">
+                <CardHeader>
+                  <CardTitle className="text-sm font-bold uppercase tracking-wide flex items-center gap-2">
+                    <FolderKanban className="w-5 h-5 text-blue-600" />
+                    Campaign Group (Optional)
+                  </CardTitle>
+                  <p className="text-xs text-gray-600 font-medium mt-1">
+                    Group multiple campaigns with shared budget control
+                  </p>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {/* Toggle between existing group or create new */}
+                  <div className="flex gap-3">
+                    <button
+                      type="button"
+                      onClick={() => updateForm({ createNewGroup: false, groupId: null })}
+                      className={cn(
+                        "flex-1 p-3 rounded-xl border-2 border-black font-bold text-sm uppercase transition-all",
+                        !formData.createNewGroup
+                          ? "bg-white neo-shadow"
+                          : "bg-gray-100 hover:bg-gray-50"
+                      )}
+                    >
+                      Existing Group
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => updateForm({ createNewGroup: true, groupId: null })}
+                      className={cn(
+                        "flex-1 p-3 rounded-xl border-2 border-black font-bold text-sm uppercase transition-all flex items-center justify-center gap-2",
+                        formData.createNewGroup
+                          ? "bg-white neo-shadow"
+                          : "bg-gray-100 hover:bg-gray-50"
+                      )}
+                    >
+                      <Plus className="w-4 h-4" />
+                      Create New
+                    </button>
+                  </div>
+
+                  {/* Select existing group */}
+                  {!formData.createNewGroup && (
+                    <div>
+                      <label className="block text-xs font-bold text-gray-600 uppercase mb-2">
+                        Select Campaign Group
+                      </label>
+                      <Select
+                        value={formData.groupId || ""}
+                        onChange={(e) => updateForm({ groupId: e.target.value || null })}
+                      >
+                        <option value="">No group (standalone campaign)</option>
+                        {campaignGroups
+                          .filter((g) => g.status === "ACTIVE")
+                          .map((group) => {
+                            const totalDailyBudget = group.campaignIds.reduce((sum, id) => {
+                              const campaign = useStore.getState().campaigns.find((c) => c.id === id);
+                              return sum + (campaign?.dailyBudget || 0);
+                            }, 0);
+                            const available = group.dailyBudgetLimit - totalDailyBudget;
+                            return (
+                              <option key={group.id} value={group.id}>
+                                {group.name} (${available.toFixed(0)} available of ${group.dailyBudgetLimit} daily)
+                              </option>
+                            );
+                          })}
+                      </Select>
+                      {formData.groupId && (
+                        <p className="text-xs text-gray-600 font-medium mt-2">
+                          This campaign will share budget with other campaigns in the group
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Create new group */}
+                  {formData.createNewGroup && (
+                    <div className="space-y-3">
+                      <div>
+                        <label className="block text-xs font-bold text-gray-600 uppercase mb-2">
+                          Group Name
+                        </label>
+                        <Input
+                          value={formData.newGroupName}
+                          onChange={(e) => updateForm({ newGroupName: e.target.value })}
+                          placeholder="e.g., Summer Campaign 2024"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-gray-600 uppercase mb-2">
+                          Shared Daily Budget Limit
+                        </label>
+                        <Input
+                          type="number"
+                          value={formData.newGroupDailyBudgetLimit || ""}
+                          onChange={(e) =>
+                            updateForm({ newGroupDailyBudgetLimit: parseFloat(e.target.value) || 0 })
+                          }
+                          min="1"
+                          step="1"
+                          placeholder="Enter total daily budget for group"
+                        />
+                        <p className="text-xs text-gray-600 font-medium mt-2">
+                          All campaigns in this group will share this daily budget limit
+                        </p>
+                      </div>
+                      {formData.newGroupDailyBudgetLimit > 0 && formData.dailyBudget > formData.newGroupDailyBudgetLimit && (
+                        <div className="bg-yellow-100 border-2 border-yellow-500 rounded-xl p-3">
+                          <p className="text-xs font-bold text-yellow-800">
+                            Warning: Campaign daily budget (${formData.dailyBudget}) exceeds group limit (${formData.newGroupDailyBudgetLimit})
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
 
               {/* Audience Targeting */}
               <Card className="bg-gray-50 border-2 border-black">
