@@ -68,56 +68,151 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 lg:py-32">
-        <div className="text-center max-w-4xl mx-auto">
-          <Badge className="mb-6 bg-green-100 text-green-900 border-2 border-green-500">
-            Recursos Exclusivos
-          </Badge>
-          <h1 className="text-5xl lg:text-6xl font-black text-gray-900 mb-6 leading-tight">
-            Tecnologia que Vai Além da Automação
-          </h1>
-          <p className="text-xl text-gray-700 mb-12 leading-relaxed max-w-3xl mx-auto">
-            Não apenas economize tempo - transforme workflows, cultura e resultados
-          </p>
+        <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+          <div>
+            <Badge className="mb-6 bg-green-100 text-green-900 border-2 border-green-500">
+              Recursos Exclusivos
+            </Badge>
+            <h1 className="text-5xl lg:text-6xl font-black text-gray-900 mb-6 leading-tight">
+              Tecnologia que Vai Além da Automação
+            </h1>
+            <p className="text-xl text-gray-700 mb-8 leading-relaxed">
+              Não apenas economize tempo - transforme workflows, cultura e resultados
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/signup">
+                <Button variant="primary" className="bg-green-500 hover:bg-green-600 text-lg px-8 py-6 inline-flex">
+                  Começar Gratuitamente
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+              <Link href="/pricing">
+                <Button variant="default" className="text-lg px-8 py-6 inline-flex">
+                  Ver Planos
+                </Button>
+              </Link>
+            </div>
 
-          {/* Features Grid */}
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            <FeatureCard
-              icon={<Sparkles className="w-8 h-8" />}
-              iconBg="bg-green-500"
-              title="Orquestração Multi-IA"
-              description="Combine múltiplos modelos de IA em um novo fluxo otimizado para máxima qualidade e eficiência"
-            />
-            <FeatureCard
-              icon={<Shield className="w-8 h-8" />}
-              iconBg="bg-green-500"
-              title="QA Visual Automatizado"
-              description="Garanta de qualidade e conformidade em todas as peças criativas com validação automática"
-            />
-            <FeatureCard
-              icon={<TrendingUp className="w-8 h-8" />}
-              iconBg="bg-green-500"
-              title="Aprendizado Contínuo"
-              description="IA que aprende com performance real e otimiza continuamente seus criativos"
-            />
-            <FeatureCard
-              icon={<Zap className="w-8 h-8" />}
-              iconBg="bg-green-500"
-              title="Produção em Escala"
-              description="Gere centenas de variações criativas em minutos, não em dias"
-            />
-            <FeatureCard
-              icon={<Globe className="w-8 h-8" />}
-              iconBg="bg-green-500"
-              title="Integração Nativa"
-              description="Conecte com Meta, Google, Figma, Adobe e outras ferramentas do seu fluxo"
-            />
-            <FeatureCard
-              icon={<Users className="w-8 h-8" />}
-              iconBg="bg-green-500"
-              title="Human in the Loop"
-              description="Controle criativo total com validação humana em cada etapa importante"
-            />
+            {/* Trust badges */}
+            <div className="mt-8 flex items-center gap-6 flex-wrap">
+              <div className="flex items-center gap-2">
+                <Check className="w-5 h-5 text-green-600" />
+                <span className="text-sm font-medium text-gray-600">Teste grátis 14 dias</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="w-5 h-5 text-green-600" />
+                <span className="text-sm font-medium text-gray-600">Sem cartão de crédito</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="w-5 h-5 text-green-600" />
+                <span className="text-sm font-medium text-gray-600">Cancele quando quiser</span>
+              </div>
+            </div>
           </div>
+
+          {/* Hero Visual */}
+          <div className="relative">
+            <Card className="bg-gradient-to-br from-green-50 to-blue-50 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+              <CardContent className="p-8">
+                <div className="space-y-6">
+                  {/* Mock Dashboard Preview */}
+                  <div className="bg-white border-2 border-black rounded-xl p-4">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="font-bold text-gray-900">Performance Overview</span>
+                      <Badge className="bg-green-500 text-white border-2 border-black">Live</Badge>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="bg-gradient-to-br from-green-100 to-green-50 border-2 border-green-500 rounded-lg p-3">
+                        <div className="text-2xl font-black text-green-700">+247%</div>
+                        <div className="text-xs font-medium text-green-600">ROI Increase</div>
+                      </div>
+                      <div className="bg-gradient-to-br from-blue-100 to-blue-50 border-2 border-blue-500 rounded-lg p-3">
+                        <div className="text-2xl font-black text-blue-700">84%</div>
+                        <div className="text-xs font-medium text-blue-600">Time Saved</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Mock AI Suggestion */}
+                  <div className="bg-white border-2 border-black rounded-xl p-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 bg-purple-500 border-2 border-black rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Sparkles className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-bold text-gray-900 mb-1">AI Recommendation</div>
+                        <p className="text-sm text-gray-600">Optimize creative #3 to increase CTR by 18%</p>
+                        <div className="mt-3 flex gap-2">
+                          <div className="px-3 py-1 bg-green-500 border-2 border-black rounded-lg text-xs font-bold text-white">Apply</div>
+                          <div className="px-3 py-1 bg-gray-100 border-2 border-gray-300 rounded-lg text-xs font-bold text-gray-700">Dismiss</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Floating Stats */}
+            <div className="absolute -bottom-6 -left-6 hidden lg:block">
+              <Card className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                <CardContent className="p-4 flex items-center gap-3">
+                  <div className="w-10 h-10 bg-orange-500 border-2 border-black rounded-lg flex items-center justify-center">
+                    <Zap className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-xl font-black text-gray-900">1.2K+</div>
+                    <div className="text-xs text-gray-600">Creatives/Month</div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+
+        {/* Features Grid */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-black text-gray-900 mb-3">Recursos que Transformam</h2>
+          <p className="text-gray-600">Tudo que você precisa para revolucionar sua produção criativa</p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <FeatureCard
+            icon={<Sparkles className="w-8 h-8" />}
+            iconBg="bg-green-500"
+            title="Orquestração Multi-IA"
+            description="Combine múltiplos modelos de IA em um novo fluxo otimizado para máxima qualidade e eficiência"
+          />
+          <FeatureCard
+            icon={<Shield className="w-8 h-8" />}
+            iconBg="bg-green-500"
+            title="QA Visual Automatizado"
+            description="Garanta de qualidade e conformidade em todas as peças criativas com validação automática"
+          />
+          <FeatureCard
+            icon={<TrendingUp className="w-8 h-8" />}
+            iconBg="bg-green-500"
+            title="Aprendizado Contínuo"
+            description="IA que aprende com performance real e otimiza continuamente seus criativos"
+          />
+          <FeatureCard
+            icon={<Zap className="w-8 h-8" />}
+            iconBg="bg-green-500"
+            title="Produção em Escala"
+            description="Gere centenas de variações criativas em minutos, não em dias"
+          />
+          <FeatureCard
+            icon={<Globe className="w-8 h-8" />}
+            iconBg="bg-green-500"
+            title="Integração Nativa"
+            description="Conecte com Meta, Google, Figma, Adobe e outras ferramentas do seu fluxo"
+          />
+          <FeatureCard
+            icon={<Users className="w-8 h-8" />}
+            iconBg="bg-green-500"
+            title="Human in the Loop"
+            description="Controle criativo total com validação humana em cada etapa importante"
+          />
         </div>
       </section>
 
