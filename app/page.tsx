@@ -409,7 +409,7 @@ export default function Home() {
                   <p className="text-sm text-gray-600 mb-6">{t.landing.roi.payback}</p>
                   <Link href="/roi-calculator">
                     <Button variant="primary" size="lg" className="bg-green-500 hover:bg-green-600">
-                      {t.landing.roi.cta}
+                      {t.landing.roi.ctaButton}
                       <ArrowRight className="w-5 h-5 ml-2" />
                     </Button>
                   </Link>
