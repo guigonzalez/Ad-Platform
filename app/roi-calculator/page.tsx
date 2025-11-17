@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Logo } from "@/components/ui/logo";
 
 export default function ROICalculatorPage() {
   // Input values
@@ -30,12 +31,7 @@ export default function ROICalculatorPage() {
       {/* Header */}
       <header className="border-b-2 border-black bg-white sticky top-0 z-50 shadow-[0_4px_0px_0px_rgba(0,0,0,1)]">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-blue-500 rounded-xl border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-white" />
-            </div>
-            <span className="font-black text-xl">AdsPlatform</span>
-          </Link>
+          <Logo />
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/#recursos" className="text-gray-700 hover:text-gray-900 font-medium transition-colors">
               Recursos
@@ -144,7 +140,7 @@ export default function ROICalculatorPage() {
                 <div className="flex items-start gap-3">
                   <Zap className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-bold text-gray-900 mb-1">Com IA da AdsPlatform</p>
+                    <p className="text-sm font-bold text-gray-900 mb-1">Com IA da ScaleBeam</p>
                     <p className="text-xs text-gray-600">
                       Redução média de 85% no tempo de produção + QA automático + Otimização contínua
                     </p>
@@ -305,7 +301,7 @@ export default function ROICalculatorPage() {
       {/* Footer */}
       <footer className="border-t-2 border-black bg-white py-8">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-gray-600">© 2025 AdsPlatform. Todos os direitos reservados.</p>
+          <p className="text-gray-600">© 2025 ScaleBeam. Todos os direitos reservados.</p>
         </div>
       </footer>
     </div>

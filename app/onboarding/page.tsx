@@ -120,7 +120,7 @@ export default function OnboardingPage() {
             <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-3xl font-black text-gray-900">AdsPlatform</h1>
+            <h1 className="text-3xl font-black text-gray-900">ScaleBeam</h1>
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome, {user?.name}!</h2>
           <p className="text-gray-600">Let's set up your account in just a few steps</p>
