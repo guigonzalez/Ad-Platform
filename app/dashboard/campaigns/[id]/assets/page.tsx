@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useStore } from "@/lib/store";
@@ -105,6 +103,15 @@ const mockAssets: CreativeAsset[] = [
     uploadedAt: "2024-01-13T09:15:00Z",
   },
 ];
+
+export function generateStaticParams() {
+  // Generate static paths for the campaign IDs we have
+  return [
+    { id: "1" },
+    { id: "2" },
+    { id: "3" },
+  ];
+}
 
 export default function CampaignAssetsPage() {
   const params = useParams();
