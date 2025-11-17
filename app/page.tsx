@@ -49,6 +49,17 @@ export default function Home() {
             </div>
             <span className="font-black text-xl">AdsPlatform</span>
           </Link>
+          <nav className="hidden md:flex items-center gap-6">
+            <a href="#recursos" className="text-gray-700 hover:text-gray-900 font-medium transition-colors">
+              Recursos
+            </a>
+            <a href="#roi" className="text-gray-700 hover:text-gray-900 font-medium transition-colors">
+              ROI
+            </a>
+            <Link href="/pricing" className="text-gray-700 hover:text-gray-900 font-medium transition-colors">
+              Planos
+            </Link>
+          </nav>
           <div className="flex items-center gap-3">
             <LanguageSwitcher />
             <Link href="/login">
@@ -171,7 +182,7 @@ export default function Home() {
         </div>
 
         {/* Features Grid */}
-        <div className="text-center mb-12">
+        <div id="recursos" className="text-center mb-12 scroll-mt-24">
           <h2 className="text-3xl font-black text-gray-900 mb-3">Recursos que Transformam</h2>
           <p className="text-gray-600">Tudo que você precisa para revolucionar sua produção criativa</p>
         </div>
@@ -359,7 +370,7 @@ export default function Home() {
       </section>
 
       {/* ROI Section */}
-      <section className="container mx-auto px-4 py-20 bg-gradient-to-br from-green-50 to-white">
+      <section id="roi" className="container mx-auto px-4 py-20 bg-gradient-to-br from-green-50 to-white scroll-mt-24">
         <div className="max-w-4xl mx-auto text-center">
           <Badge className="mb-6 bg-green-100 text-green-900 border-2 border-green-500">
             Resultados Comprovados
@@ -400,7 +411,7 @@ export default function Home() {
                   <div className="text-7xl font-black text-green-600 mb-4">2.539%</div>
                   <div className="text-xl font-bold text-gray-900 mb-2">ROI no Primeiro Ano</div>
                   <p className="text-sm text-gray-600 mb-6">Payback em apenas 18 dias</p>
-                  <Link href="/signup">
+                  <Link href="/roi-calculator">
                     <Button variant="primary" size="lg" className="bg-green-500 hover:bg-green-600">
                       Calcular Seu ROI
                       <ArrowRight className="w-5 h-5 ml-2" />

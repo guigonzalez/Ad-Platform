@@ -18,6 +18,17 @@ export default function PricingPage() {
             </div>
             <span className="font-black text-xl">AdsPlatform</span>
           </Link>
+          <nav className="hidden md:flex items-center gap-6">
+            <Link href="/#recursos" className="text-gray-700 hover:text-gray-900 font-medium transition-colors">
+              Recursos
+            </Link>
+            <Link href="/#roi" className="text-gray-700 hover:text-gray-900 font-medium transition-colors">
+              ROI
+            </Link>
+            <Link href="/pricing" className="text-gray-900 font-bold border-b-2 border-green-500">
+              Planos
+            </Link>
+          </nav>
           <div className="flex items-center gap-3">
             <Link href="/login">
               <Button variant="ghost" size="sm">
@@ -50,49 +61,69 @@ export default function PricingPage() {
 
       {/* Pricing Cards */}
       <section className="container mx-auto px-4 pb-20">
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {/* Starter Plan */}
-          <Card className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
-            <CardContent className="p-8">
+          <Card className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all relative">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+              <Badge className="bg-blue-500 text-white border-2 border-black px-4 py-1">
+                Melhor preço
+              </Badge>
+            </div>
+            <CardContent className="p-6">
               <div className="mb-6">
-                <h3 className="text-2xl font-black text-gray-900 mb-2">Starter</h3>
-                <div className="mb-2">
-                  <span className="text-5xl font-black text-gray-900">R$ 0</span>
-                  <span className="text-gray-600 ml-2">/mês</span>
+                <h3 className="text-xl font-black text-gray-900 mb-4">Starter</h3>
+                <div className="mb-1">
+                  <div className="text-sm text-gray-500 line-through">De R$ 17.500</div>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-4xl font-black text-gray-900">R$ 6.000</span>
+                    <span className="text-gray-600">/mês</span>
+                  </div>
                 </div>
-                <p className="text-gray-600 text-sm">Perfeito para testar e pequenos projetos</p>
+                <p className="text-gray-600 text-xs mt-2">Para equipes com automação criativa</p>
               </div>
 
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-2 mb-6 text-sm">
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Até 3 campanhas ativas</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Pesquisas até 300 pesquisas/mês</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">1 usuário</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Máximo 1 marca</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Análises básicas</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Suporte Standard</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Orquestração Multi-IA básica</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">QA Visual automatizado</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Templates pré-configurados</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Integrações essenciais</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Dashboard de performance</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
                   <span className="text-gray-700">Suporte por email</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">2 plataformas (Meta & Google)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Geração básica de IA</span>
                 </li>
               </ul>
 
               <Link href="/signup">
                 <Button variant="default" className="w-full" size="lg">
-                  Começar Grátis
+                  Começar Agora
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
@@ -107,54 +138,124 @@ export default function PricingPage() {
                 Mais Popular
               </Badge>
             </div>
-            <CardContent className="p-8">
+            <CardContent className="p-6">
               <div className="mb-6">
-                <h3 className="text-2xl font-black text-gray-900 mb-2">Professional</h3>
-                <div className="mb-2">
-                  <span className="text-5xl font-black text-gray-900">R$ 497</span>
-                  <span className="text-gray-600 ml-2">/mês</span>
+                <h3 className="text-xl font-black text-gray-900 mb-4">Professional</h3>
+                <div className="mb-1">
+                  <div className="text-sm text-gray-500 line-through">De R$ 42.500</div>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-4xl font-black text-gray-900">R$ 12.500</span>
+                    <span className="text-gray-600">/mês</span>
+                  </div>
                 </div>
-                <p className="text-gray-600 text-sm">Para empresas em crescimento e agências</p>
+                <p className="text-gray-600 text-xs mt-2">Para agilidade com crescimento escalável</p>
               </div>
 
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-2 mb-6 text-sm">
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Campanhas ilimitadas</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Pesquisas até 750 pesquisas/mês</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Até 5 usuários</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Máximo 3 marcas</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Análises avançadas</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Suporte Priority</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Tudo do Starter, mas:</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">White-label completo</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Custom AI training</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Integração avançada (Mídia, Google)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Integração avançadas workflows</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
                   <span className="text-gray-700">Suporte prioritário</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Geração avançada de IA</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Regras de automação</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Relatórios personalizados</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">QA Visual automatizado</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Treinamento mensal do time-sucesso</span>
                 </li>
               </ul>
 
               <Link href="/signup">
                 <Button variant="primary" className="w-full bg-green-500 hover:bg-green-600" size="lg">
-                  Iniciar Teste Grátis
+                  Solicitar Demo
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+
+          {/* Agency Plan */}
+          <Card className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
+            <CardContent className="p-6">
+              <div className="mb-6">
+                <h3 className="text-xl font-black text-gray-900 mb-4">Agency</h3>
+                <div className="mb-1">
+                  <div className="text-sm text-gray-500 line-through">De R$ 85.000</div>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-4xl font-black text-gray-900">R$ 25.000</span>
+                    <span className="text-gray-600">/mês</span>
+                  </div>
+                </div>
+                <p className="text-gray-600 text-xs mt-2">Para agências escaláveis e produção focada</p>
+              </div>
+
+              <ul className="space-y-2 mb-6 text-sm">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Pesquisas até 2.000 pesquisas/mês</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Máximo 10 marcas</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Suporte Dedicated</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Tudo do Professional, mas:</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Gerente de acesso dedicado</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">SLA avançado</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Suporte 24/7</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Consultoria estratégica mensal</span>
+                </li>
+              </ul>
+
+              <Link href="/signup">
+                <Button variant="default" className="w-full" size="lg">
+                  Solicitar Demo
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
@@ -163,47 +264,54 @@ export default function PricingPage() {
 
           {/* Enterprise Plan */}
           <Card className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
-            <CardContent className="p-8">
+            <CardContent className="p-6">
               <div className="mb-6">
-                <h3 className="text-2xl font-black text-gray-900 mb-2">Enterprise</h3>
-                <div className="mb-2">
-                  <span className="text-5xl font-black text-gray-900">Custom</span>
+                <h3 className="text-xl font-black text-gray-900 mb-4">Enterprise</h3>
+                <div className="mb-1">
+                  <div className="text-sm text-gray-500 line-through">De R$ 125.000</div>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl font-black text-gray-900">Customizado</span>
+                  </div>
                 </div>
-                <p className="text-gray-600 text-sm">Para grandes equipes e corporações</p>
+                <p className="text-gray-600 text-xs mt-2">Para a solução sob medida, compliance e infraestrutura dedicada</p>
               </div>
 
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-2 mb-6 text-sm">
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Tudo do Professional</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Requisitos limitados</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Usuários ilimitados</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Máximo Suporte 24/7</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Account manager dedicado</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Tudo da Agency, mas:</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Suporte 24/7 por telefone</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Infraestrutura dedicada</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Faturamento corporativo</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Compliance e segurança avançada</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Integrações customizadas</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Integração sistemas</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">SLA garantido</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">CSM dedicado</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Treinamento personalizado</span>
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">ROI tracking exclusivity</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700">Roadmap prioritário</span>
                 </li>
               </ul>
 
@@ -215,6 +323,33 @@ export default function PricingPage() {
               </Link>
             </CardContent>
           </Card>
+        </div>
+      </section>
+
+      {/* All Plans Include Section */}
+      <section className="container mx-auto px-4 py-12 bg-gradient-to-br from-green-50 to-white">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-black text-gray-900 mb-8 text-center">Todos os planos incluem:</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-center">
+              <CardContent className="p-6">
+                <div className="text-5xl font-black text-green-600 mb-2">83%</div>
+                <p className="text-gray-700 font-medium">Margem bruta média</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-center">
+              <CardContent className="p-6">
+                <div className="text-5xl font-black text-blue-600 mb-2">6-9 meses</div>
+                <p className="text-gray-700 font-medium">CAC Payback</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-center">
+              <CardContent className="p-6">
+                <div className="text-5xl font-black text-purple-600 mb-2">&lt;5%</div>
+                <p className="text-gray-700 font-medium">Churn anual</p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
