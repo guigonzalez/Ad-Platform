@@ -68,297 +68,285 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <Badge className="mb-6 bg-purple-100 text-purple-900 border-2 border-purple-500">
-              <Sparkles className="w-3 h-3 mr-1" />
-              AI-Powered Platform
-            </Badge>
-            <h1 className="text-5xl lg:text-6xl font-black text-gray-900 mb-6 leading-tight">
-              {t.landing.title}
-              <br />
-              <span className="text-purple-600">{t.landing.titleLine2}</span>
-            </h1>
-            <p className="text-xl text-gray-700 mb-8 leading-relaxed">
-              {t.landing.subtitle}
-            </p>
-            <Link href="/signup">
-              <Button variant="primary" className="text-lg px-8 py-6 inline-flex">
-                {t.landing.cta}
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </Link>
-
-            {/* Trust badges */}
-            <div className="mt-12 flex items-center gap-6 flex-wrap">
-              <div className="flex items-center gap-2">
-                <Check className="w-5 h-5 text-green-600" />
-                <span className="text-sm font-medium text-gray-600">Free 14-day trial</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-5 h-5 text-green-600" />
-                <span className="text-sm font-medium text-gray-600">No credit card required</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="w-5 h-5 text-green-600" />
-                <span className="text-sm font-medium text-gray-600">Cancel anytime</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Hero Image / Stats */}
-          <div className="relative">
-            <div className="grid grid-cols-2 gap-4">
-              <Card className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 bg-blue-500 rounded-xl border-2 border-black mb-4 flex items-center justify-center">
-                    <TrendingUp className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="text-3xl font-black text-gray-900 mb-1">70%</div>
-                  <div className="text-sm font-medium text-gray-600">{t.landing.stats.timeSaved}</div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all mt-8">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 bg-green-500 rounded-xl border-2 border-black mb-4 flex items-center justify-center">
-                    <Globe className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="text-3xl font-black text-gray-900 mb-1">2</div>
-                  <div className="text-sm font-medium text-gray-600">{t.landing.stats.platforms} in {t.landing.stats.oneDashboard}</div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 bg-purple-500 rounded-xl border-2 border-black mb-4 flex items-center justify-center">
-                    <Zap className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="text-3xl font-black text-gray-900 mb-1">24/7</div>
-                  <div className="text-sm font-medium text-gray-600">{t.landing.stats.autoOptimization}</div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all mt-8">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 bg-white rounded-xl border-2 border-black mb-4 flex items-center justify-center">
-                    <Sparkles className="w-6 h-6 text-purple-600" />
-                  </div>
-                  <div className="text-3xl font-black text-white mb-1">AI</div>
-                  <div className="text-sm font-medium text-white/90">Powered</div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-black text-gray-900 mb-4">{t.landing.features.title}</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Everything you need to run successful ad campaigns on Google and Meta
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          <FeatureCard
-            icon={<BarChart3 className="w-8 h-8" />}
-            iconBg="bg-blue-500"
-            title={t.landing.features.unifiedDashboard.title}
-            description={t.landing.features.unifiedDashboard.description}
-          />
-          <FeatureCard
-            icon={<Zap className="w-8 h-8" />}
-            iconBg="bg-orange-500"
-            title={t.landing.features.smartAutomation.title}
-            description={t.landing.features.smartAutomation.description}
-          />
-          <FeatureCard
-            icon={<Brain className="w-8 h-8" />}
-            iconBg="bg-purple-500"
-            title="AI Asset Generation"
-            description="Generate campaign assets, copy, and creatives powered by AI"
-          />
-          <FeatureCard
-            icon={<Target className="w-8 h-8" />}
-            iconBg="bg-pink-500"
-            title="Smart Targeting"
-            description="AI-powered audience targeting based on your campaign goals"
-          />
-          <FeatureCard
-            icon={<TrendingUp className="w-8 h-8" />}
-            iconBg="bg-green-500"
-            title={t.landing.features.teamManagement.title}
-            description={t.landing.features.teamManagement.description}
-          />
-          <FeatureCard
-            icon={<Shield className="w-8 h-8" />}
-            iconBg="bg-cyan-500"
-            title="Enterprise Security"
-            description="Corporate billing, invoicing, and enterprise-grade security"
-          />
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-gray-900 mb-4">How it works</h2>
-            <p className="text-xl text-gray-600">
-              Get started in minutes with our AI-powered workflow
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            <StepCard
-              number="1"
-              title="Import AI-Generated Assets"
-              description="Search and import campaign assets generated by our AI platform"
-              color="purple"
-            />
-            <StepCard
-              number="2"
-              title="AI Analyzes & Configures"
-              description="AI automatically generates campaign parameters based on your assets"
-              color="pink"
-            />
-            <StepCard
-              number="3"
-              title="Review & Launch"
-              description="Review AI suggestions, make adjustments, and launch across platforms"
-              color="orange"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section className="container mx-auto px-4 py-20 bg-gradient-to-br from-purple-50 to-pink-50">
-        <div className="text-center mb-16">
-          <Badge className="mb-6 bg-purple-100 text-purple-900 border-2 border-purple-500">
-            <Star className="w-3 h-3 mr-1" />
-            Simple, Transparent Pricing
+        <div className="text-center max-w-4xl mx-auto">
+          <Badge className="mb-6 bg-green-100 text-green-900 border-2 border-green-500">
+            Recursos Exclusivos
           </Badge>
-          <h2 className="text-4xl font-black text-gray-900 mb-4">Choose your plan</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Start free and scale as you grow. All plans include 14-day free trial.
+          <h1 className="text-5xl lg:text-6xl font-black text-gray-900 mb-6 leading-tight">
+            Tecnologia que Vai Além da Automação
+          </h1>
+          <p className="text-xl text-gray-700 mb-12 leading-relaxed max-w-3xl mx-auto">
+            Não apenas economize tempo - transforme workflows, cultura e resultados
           </p>
-        </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Free Plan */}
-          <PricingCard
-            name="Free"
-            price="$0"
-            period="forever"
-            description="Perfect for testing and small projects"
-            features={[
-              "Up to 3 campaigns",
-              "1 team member",
-              "Basic analytics",
-              "Email support",
-              "2 platforms (Meta & Google)",
-            ]}
-            cta="Start Free"
-            href="/signup"
-            popular={false}
-          />
-
-          {/* Professional Plan */}
-          <PricingCard
-            name="Professional"
-            price="$99"
-            period="per month"
-            description="For growing businesses and agencies"
-            features={[
-              "Unlimited campaigns",
-              "Up to 5 team members",
-              "Advanced analytics",
-              "Priority support",
-              "AI asset generation",
-              "Automation rules",
-              "Custom reporting",
-            ]}
-            cta="Start Free Trial"
-            href="/signup"
-            popular={true}
-          />
-
-          {/* Enterprise Plan */}
-          <PricingCard
-            name="Enterprise"
-            price="Custom"
-            period="contact us"
-            description="For large teams and corporations"
-            features={[
-              "Everything in Professional",
-              "Unlimited team members",
-              "Dedicated account manager",
-              "24/7 phone support",
-              "Corporate billing & invoicing",
-              "Custom integrations",
-              "SLA guarantee",
-            ]}
-            cta="Contact Sales"
-            href="/signup"
-            popular={false}
-          />
+          {/* Features Grid */}
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <FeatureCard
+              icon={<Sparkles className="w-8 h-8" />}
+              iconBg="bg-green-500"
+              title="Orquestração Multi-IA"
+              description="Combine múltiplos modelos de IA em um novo fluxo otimizado para máxima qualidade e eficiência"
+            />
+            <FeatureCard
+              icon={<Shield className="w-8 h-8" />}
+              iconBg="bg-green-500"
+              title="QA Visual Automatizado"
+              description="Garanta de qualidade e conformidade em todas as peças criativas com validação automática"
+            />
+            <FeatureCard
+              icon={<TrendingUp className="w-8 h-8" />}
+              iconBg="bg-green-500"
+              title="Aprendizado Contínuo"
+              description="IA que aprende com performance real e otimiza continuamente seus criativos"
+            />
+            <FeatureCard
+              icon={<Zap className="w-8 h-8" />}
+              iconBg="bg-green-500"
+              title="Produção em Escala"
+              description="Gere centenas de variações criativas em minutos, não em dias"
+            />
+            <FeatureCard
+              icon={<Globe className="w-8 h-8" />}
+              iconBg="bg-green-500"
+              title="Integração Nativa"
+              description="Conecte com Meta, Google, Figma, Adobe e outras ferramentas do seu fluxo"
+            />
+            <FeatureCard
+              icon={<Users className="w-8 h-8" />}
+              iconBg="bg-green-500"
+              title="Human in the Loop"
+              description="Controle criativo total com validação humana em cada etapa importante"
+            />
+          </div>
         </div>
       </section>
 
-      {/* Social Proof */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-black text-gray-900 mb-4">Trusted by marketing teams</h2>
-          <p className="text-xl text-gray-600">
-            Join hundreds of companies automating their ad campaigns
-          </p>
-        </div>
+      {/* Multi-Dimensional Evaluation */}
+      <section className="container mx-auto px-4 py-20 bg-gradient-to-br from-green-50 to-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <Badge className="mb-6 bg-green-100 text-green-900 border-2 border-green-500">
+                Avaliação Inteligente
+              </Badge>
+              <h2 className="text-4xl font-black text-gray-900 mb-6">
+                Avaliação Multi-Dimensional com IA
+              </h2>
+              <p className="text-lg text-gray-700 mb-8">
+                Nossa plataforma analisa automaticamente seus criativos em múltiplas dimensões: competitividade, experiência do usuário e performance de conversão.
+              </p>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          <TestimonialCard
-            quote="AdsPlatform cut our campaign management time by 70%. The AI suggestions are incredibly accurate."
-            author="Sarah Johnson"
-            role="Marketing Director"
-            company="TechCorp"
-          />
-          <TestimonialCard
-            quote="Finally, a platform that actually understands both Meta and Google Ads. Game changer for our agency."
-            author="Michael Chen"
-            role="CEO"
-            company="Digital Agency Pro"
-          />
-          <TestimonialCard
-            quote="The automation rules saved us thousands in wasted ad spend. ROI improved by 45% in the first month."
-            author="Amanda Silva"
-            role="Growth Manager"
-            company="E-commerce Plus"
-          />
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <Check className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Avaliação de Competitividade</h3>
+                    <p className="text-gray-600 text-sm">Compare seus criativos com os melhores do mercado automaticamente</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Check className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Análise de Experiência</h3>
+                    <p className="text-gray-600 text-sm">Preveja como seu público reagirá antes mesmo de publicar</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Check className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Score de Performance</h3>
+                    <p className="text-gray-600 text-sm">Receba scores preditivos em +30 KPIs de lançamento</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative">
+              <Card className="bg-white border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                <CardContent className="p-8">
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between pb-4 border-b-2 border-gray-200">
+                      <span className="font-bold text-gray-700">Avaliação Geral</span>
+                      <Badge className="bg-green-500 text-white border-2 border-black">Excelente</Badge>
+                    </div>
+
+                    {[
+                      { label: "Competitividade", score: 94, color: "bg-green-500" },
+                      { label: "Experiência do Usuário", score: 88, color: "bg-blue-500" },
+                      { label: "Performance Preditiva", score: 92, color: "bg-purple-500" },
+                    ].map((metric, idx) => (
+                      <div key={idx}>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-medium text-gray-700">{metric.label}</span>
+                          <span className="text-sm font-black text-gray-900">{metric.score}%</span>
+                        </div>
+                        <div className="h-3 bg-gray-200 rounded-full border-2 border-black overflow-hidden">
+                          <div
+                            className={`h-full ${metric.color} border-r-2 border-black`}
+                            style={{ width: `${metric.score}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Continuous Feedback System */}
+      <section className="container mx-auto px-4 py-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="order-2 lg:order-1">
+              <Card className="bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                <CardContent className="p-8 text-white">
+                  <h3 className="text-2xl font-black mb-6">Insights em Tempo Real</h3>
+                  <div className="space-y-4">
+                    <div className="bg-white/10 border-2 border-white/30 rounded-xl p-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <TrendingUp className="w-5 h-5" />
+                        <span className="font-bold">+15% CTR</span>
+                      </div>
+                      <p className="text-sm text-white/80">Variante A está superando 23% acima da média</p>
+                    </div>
+                    <div className="bg-white/10 border-2 border-white/30 rounded-xl p-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Zap className="w-5 h-5" />
+                        <span className="font-bold">Sugestão de IA</span>
+                      </div>
+                      <p className="text-sm text-white/80">Ajuste o CTA para aumentar conversões em 12%</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="order-1 lg:order-2">
+              <Badge className="mb-6 bg-green-100 text-green-900 border-2 border-green-500">
+                Feedback Inteligente
+              </Badge>
+              <h2 className="text-4xl font-black text-gray-900 mb-6">
+                Sistema de Feedback Contínuo
+              </h2>
+              <p className="text-lg text-gray-700 mb-8">
+                Receba insights acionáveis em tempo real sobre cada criativo. Nossa IA aprende com seus resultados e sugere melhorias contínuas.
+              </p>
+
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <Check className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Dashboards Interativos</h3>
+                    <p className="text-gray-600 text-sm">Visualize métricas de performance em tempo real</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Check className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Sugestões com IA</h3>
+                    <p className="text-gray-600 text-sm">Recomendações automáticas baseadas em dados</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Check className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Melhoria Contínua</h3>
+                    <p className="text-gray-600 text-sm">A plataforma aprende e evolui com seu uso</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ROI Section */}
+      <section className="container mx-auto px-4 py-20 bg-gradient-to-br from-green-50 to-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <Badge className="mb-6 bg-green-100 text-green-900 border-2 border-green-500">
+            Resultados Comprovados
+          </Badge>
+          <h2 className="text-4xl font-black text-gray-900 mb-12">ROI que Impressiona</h2>
+
+          <Card className="bg-white border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+            <CardContent className="p-0">
+              <div className="grid md:grid-cols-2">
+                {/* Left Side - Cliente Real */}
+                <div className="p-8 border-r-2 border-black">
+                  <h3 className="text-xl font-black text-gray-900 mb-6 flex items-center gap-2">
+                    <Users className="w-6 h-6 text-green-600" />
+                    Cenário Real de Cliente
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center pb-3 border-b-2 border-gray-200">
+                      <span className="text-gray-700">Tempo Manual (mês)</span>
+                      <span className="font-black text-gray-900">240 horas</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-3 border-b-2 border-gray-200">
+                      <span className="text-gray-700">Tempo com IA (mês)</span>
+                      <span className="font-black text-gray-900">38 horas</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-3 border-b-2 border-gray-200">
+                      <span className="text-gray-700">Economia Mensal</span>
+                      <span className="font-black text-green-600">R$ 274.926</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-700">Investimento Mensal</span>
+                      <span className="font-black text-gray-900">R$ 12.500</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Side - ROI */}
+                <div className="p-8 bg-gradient-to-br from-green-50 to-white flex flex-col items-center justify-center">
+                  <div className="text-7xl font-black text-green-600 mb-4">2.539%</div>
+                  <div className="text-xl font-bold text-gray-900 mb-2">ROI no Primeiro Ano</div>
+                  <p className="text-sm text-gray-600 mb-6">Payback em apenas 18 dias</p>
+                  <Link href="/signup">
+                    <Button variant="primary" size="lg" className="bg-green-500 hover:bg-green-600">
+                      Calcular Seu ROI
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
       {/* CTA */}
       <section className="container mx-auto px-4 py-20">
-        <Card className="bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-          <CardContent className="p-12 text-center">
-            <h2 className="text-4xl font-black text-white mb-4">
-              {t.landing.cta2.title}
+        <Card className="bg-white border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+          <CardContent className="p-16 text-center">
+            <h2 className="text-4xl lg:text-5xl font-black text-gray-900 mb-4">
+              Pronto para Transformar sua Produção Criativa?
             </h2>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              {t.landing.cta2.subtitle}
+            <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+              Junte-se às agências e empresas que já estão revolucionando seus workflows com IA
             </p>
-            <Link href="/signup">
-              <Button
-                variant="default"
-                className="bg-white text-purple-600 hover:bg-gray-100 border-2 border-black text-lg px-8 py-6 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-              >
-                Start Free Trial
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/signup">
+                <Button
+                  variant="primary"
+                  className="bg-green-500 hover:bg-green-600 border-2 border-black text-lg px-10 py-6 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                >
+                  Agendar Demo Personalizada
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+              <Link href="/signup">
+                <Button
+                  variant="default"
+                  className="text-lg px-10 py-6 font-bold"
+                >
+                  Ver Planos e Preços
+                </Button>
+              </Link>
+            </div>
           </CardContent>
         </Card>
       </section>
