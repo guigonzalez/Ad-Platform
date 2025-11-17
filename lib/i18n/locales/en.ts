@@ -35,7 +35,6 @@ export const en = {
     title: "Manage All Your Campaigns",
     titleLine2: "In One Place",
     subtitle: "Unified dashboard for Google Ads and Meta Ads with intelligent automation. No more switching between platforms.",
-    cta: "Try Demo Dashboard",
     viewDemo: "View Demo Dashboard",
     stats: {
       timeSaved: "Time Saved",
@@ -165,7 +164,7 @@ export const en = {
       monthlyInvestment: "Monthly investment",
       roi: "ROI in First Year",
       payback: "Payback in just 18 days",
-      cta: "Calculate Your ROI",
+      ctaButton: "Calculate Your ROI",
       stats: {
         hours: "hours",
       },

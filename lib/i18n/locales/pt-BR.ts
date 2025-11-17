@@ -37,7 +37,6 @@ export const ptBR: TranslationKeys = {
     title: "Gerencie Todas as Suas Campanhas",
     titleLine2: "Em Um Só Lugar",
     subtitle: "Dashboard unificado para Google Ads e Meta Ads com automação inteligente. Chega de alternar entre plataformas.",
-    cta: "Testar Dashboard Demo",
     viewDemo: "Ver Dashboard Demo",
     stats: {
       timeSaved: "Tempo Economizado",
@@ -167,7 +166,7 @@ export const ptBR: TranslationKeys = {
       monthlyInvestment: "Investimento Mensal",
       roi: "ROI no Primeiro Ano",
       payback: "Payback em apenas 18 dias",
-      cta: "Calcular Seu ROI",
+      ctaButton: "Calcular Seu ROI",
       stats: {
         hours: "horas",
       },
