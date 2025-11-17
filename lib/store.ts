@@ -249,8 +249,7 @@ export const useStore = create<AppState>((set) => ({
           message: `${group.name} and all its campaigns have been paused.`,
           actionUrl: "/dashboard/campaigns",
           metadata: {
-            groupId: group.id,
-            groupName: group.name,
+            campaignName: group.name,
           },
         });
       }
@@ -276,8 +275,7 @@ export const useStore = create<AppState>((set) => ({
           message: `${group.name} and all its campaigns are now active.`,
           actionUrl: "/dashboard/campaigns",
           metadata: {
-            groupId: group.id,
-            groupName: group.name,
+            campaignName: group.name,
           },
         });
       }
