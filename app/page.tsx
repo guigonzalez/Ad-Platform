@@ -47,25 +47,25 @@ export default function Home() {
           <Logo />
           <nav className="hidden md:flex items-center gap-6">
             <a href="#recursos" className="text-gray-700 hover:text-gray-900 font-medium transition-colors">
-              Recursos
+              {t.pricing.nav.features}
             </a>
             <a href="#roi" className="text-gray-700 hover:text-gray-900 font-medium transition-colors">
-              ROI
+              {t.pricing.nav.roi}
             </a>
             <Link href="/pricing" className="text-gray-700 hover:text-gray-900 font-medium transition-colors">
-              Planos
+              {t.pricing.nav.plans}
             </Link>
           </nav>
           <div className="flex items-center gap-3">
             <LanguageSwitcher />
             <Link href="/login">
               <Button variant="ghost" size="sm">
-                Sign in
+                {t.pricing.nav.login}
               </Button>
             </Link>
             <Link href="/signup">
               <Button variant="primary" size="sm">
-                Get Started
+                {t.pricing.nav.getStarted}
                 <ArrowRight className="w-4 h-4 ml-1" />
               </Button>
             </Link>
@@ -78,24 +78,24 @@ export default function Home() {
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
           <div>
             <Badge className="mb-6 bg-green-100 text-green-900 border-2 border-green-500">
-              Recursos Exclusivos
+              {t.landing.hero.badge}
             </Badge>
             <h1 className="text-5xl lg:text-6xl font-black text-gray-900 mb-6 leading-tight">
-              Tecnologia que Vai Além da Automação
+              {t.landing.hero.title}
             </h1>
             <p className="text-xl text-gray-700 mb-8 leading-relaxed">
-              Não apenas economize tempo - transforme workflows, cultura e resultados
+              {t.landing.hero.subtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/signup">
                 <Button variant="primary" className="bg-green-500 hover:bg-green-600 text-lg px-8 py-6 inline-flex">
-                  Começar Gratuitamente
+                  {t.landing.hero.ctaPrimary}
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
               <Link href="/pricing">
                 <Button variant="default" className="text-lg px-8 py-6 inline-flex">
-                  Ver Planos
+                  {t.landing.hero.ctaSecondary}
                 </Button>
               </Link>
             </div>
@@ -104,15 +104,15 @@ export default function Home() {
             <div className="mt-8 flex items-center gap-6 flex-wrap">
               <div className="flex items-center gap-2">
                 <Check className="w-5 h-5 text-green-600" />
-                <span className="text-sm font-medium text-gray-600">Teste grátis 14 dias</span>
+                <span className="text-sm font-medium text-gray-600">{t.landing.hero.trustBadges.freeTrial}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-5 h-5 text-green-600" />
-                <span className="text-sm font-medium text-gray-600">Sem cartão de crédito</span>
+                <span className="text-sm font-medium text-gray-600">{t.landing.hero.trustBadges.noCard}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-5 h-5 text-green-600" />
-                <span className="text-sm font-medium text-gray-600">Cancele quando quiser</span>
+                <span className="text-sm font-medium text-gray-600">{t.landing.hero.trustBadges.cancelAnytime}</span>
               </div>
             </div>
           </div>
@@ -179,46 +179,46 @@ export default function Home() {
 
         {/* Features Grid */}
         <div id="recursos" className="text-center mb-12 scroll-mt-24">
-          <h2 className="text-3xl font-black text-gray-900 mb-3">Recursos que Transformam</h2>
-          <p className="text-gray-600">Tudo que você precisa para revolucionar sua produção criativa</p>
+          <h2 className="text-3xl font-black text-gray-900 mb-3">{t.landing.features2.title}</h2>
+          <p className="text-gray-600">{t.landing.features2.subtitle}</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           <FeatureCard
             icon={<Sparkles className="w-8 h-8" />}
             iconBg="bg-green-500"
-            title="Orquestração Multi-IA"
-            description="Combine múltiplos modelos de IA em um novo fluxo otimizado para máxima qualidade e eficiência"
+            title={t.landing.features2.feature1.title}
+            description={t.landing.features2.feature1.description}
           />
           <FeatureCard
             icon={<Shield className="w-8 h-8" />}
             iconBg="bg-green-500"
-            title="QA Visual Automatizado"
-            description="Garanta de qualidade e conformidade em todas as peças criativas com validação automática"
+            title={t.landing.features2.feature2.title}
+            description={t.landing.features2.feature2.description}
           />
           <FeatureCard
             icon={<TrendingUp className="w-8 h-8" />}
             iconBg="bg-green-500"
-            title="Aprendizado Contínuo"
-            description="IA que aprende com performance real e otimiza continuamente seus criativos"
+            title={t.landing.features2.feature3.title}
+            description={t.landing.features2.feature3.description}
           />
           <FeatureCard
             icon={<Zap className="w-8 h-8" />}
             iconBg="bg-green-500"
-            title="Produção em Escala"
-            description="Gere centenas de variações criativas em minutos, não em dias"
+            title={t.landing.features2.feature4.title}
+            description={t.landing.features2.feature4.description}
           />
           <FeatureCard
             icon={<Globe className="w-8 h-8" />}
             iconBg="bg-green-500"
-            title="Integração Nativa"
-            description="Conecte com Meta, Google, Figma, Adobe e outras ferramentas do seu fluxo"
+            title={t.landing.features2.feature5.title}
+            description={t.landing.features2.feature5.description}
           />
           <FeatureCard
             icon={<Users className="w-8 h-8" />}
             iconBg="bg-green-500"
-            title="Human in the Loop"
-            description="Controle criativo total com validação humana em cada etapa importante"
+            title={t.landing.features2.feature6.title}
+            description={t.landing.features2.feature6.description}
           />
         </div>
       </section>
@@ -229,35 +229,35 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge className="mb-6 bg-green-100 text-green-900 border-2 border-green-500">
-                Avaliação Inteligente
+                {t.landing.evaluation.badge}
               </Badge>
               <h2 className="text-4xl font-black text-gray-900 mb-6">
-                Avaliação Multi-Dimensional com IA
+                {t.landing.evaluation.title}
               </h2>
               <p className="text-lg text-gray-700 mb-8">
-                Nossa plataforma analisa automaticamente seus criativos em múltiplas dimensões: competitividade, experiência do usuário e performance de conversão.
+                {t.landing.evaluation.subtitle}
               </p>
 
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <Check className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Avaliação de Competitividade</h3>
-                    <p className="text-gray-600 text-sm">Compare seus criativos com os melhores do mercado automaticamente</p>
+                    <h3 className="font-bold text-gray-900 mb-1">{t.landing.evaluation.feature1.title}</h3>
+                    <p className="text-gray-600 text-sm">{t.landing.evaluation.feature1.description}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Check className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Análise de Experiência</h3>
-                    <p className="text-gray-600 text-sm">Preveja como seu público reagirá antes mesmo de publicar</p>
+                    <h3 className="font-bold text-gray-900 mb-1">{t.landing.evaluation.feature2.title}</h3>
+                    <p className="text-gray-600 text-sm">{t.landing.evaluation.feature2.description}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Check className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Score de Performance</h3>
-                    <p className="text-gray-600 text-sm">Receba scores preditivos em +30 KPIs de lançamento</p>
+                    <h3 className="font-bold text-gray-900 mb-1">{t.landing.evaluation.feature3.title}</h3>
+                    <p className="text-gray-600 text-sm">{t.landing.evaluation.feature3.description}</p>
                   </div>
                 </div>
               </div>
@@ -268,14 +268,14 @@ export default function Home() {
                 <CardContent className="p-8">
                   <div className="space-y-6">
                     <div className="flex items-center justify-between pb-4 border-b-2 border-gray-200">
-                      <span className="font-bold text-gray-700">Avaliação Geral</span>
-                      <Badge className="bg-green-500 text-white border-2 border-black">Excelente</Badge>
+                      <span className="font-bold text-gray-700">{t.landing.evaluation.card.title}</span>
+                      <Badge className="bg-green-500 text-white border-2 border-black">{t.landing.evaluation.card.badge}</Badge>
                     </div>
 
                     {[
-                      { label: "Competitividade", score: 94, color: "bg-green-500" },
-                      { label: "Experiência do Usuário", score: 88, color: "bg-blue-500" },
-                      { label: "Performance Preditiva", score: 92, color: "bg-purple-500" },
+                      { label: t.landing.evaluation.card.competitiveness, score: 94, color: "bg-green-500" },
+                      { label: t.landing.evaluation.card.userExperience, score: 88, color: "bg-blue-500" },
+                      { label: t.landing.evaluation.card.predictivePerformance, score: 92, color: "bg-purple-500" },
                     ].map((metric, idx) => (
                       <div key={idx}>
                         <div className="flex items-center justify-between mb-2">
@@ -305,21 +305,21 @@ export default function Home() {
             <div className="order-2 lg:order-1">
               <Card className="bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
                 <CardContent className="p-8 text-white">
-                  <h3 className="text-2xl font-black mb-6">Insights em Tempo Real</h3>
+                  <h3 className="text-2xl font-black mb-6">{t.landing.feedback.card.title}</h3>
                   <div className="space-y-4">
                     <div className="bg-white/10 border-2 border-white/30 rounded-xl p-4">
                       <div className="flex items-center gap-3 mb-2">
                         <TrendingUp className="w-5 h-5" />
-                        <span className="font-bold">+15% CTR</span>
+                        <span className="font-bold">{t.landing.feedback.card.insight1.label}</span>
                       </div>
-                      <p className="text-sm text-white/80">Variante A está superando 23% acima da média</p>
+                      <p className="text-sm text-white/80">{t.landing.feedback.card.insight1.description}</p>
                     </div>
                     <div className="bg-white/10 border-2 border-white/30 rounded-xl p-4">
                       <div className="flex items-center gap-3 mb-2">
                         <Zap className="w-5 h-5" />
-                        <span className="font-bold">Sugestão de IA</span>
+                        <span className="font-bold">{t.landing.feedback.card.insight2.label}</span>
                       </div>
-                      <p className="text-sm text-white/80">Ajuste o CTA para aumentar conversões em 12%</p>
+                      <p className="text-sm text-white/80">{t.landing.feedback.card.insight2.description}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -328,35 +328,35 @@ export default function Home() {
 
             <div className="order-1 lg:order-2">
               <Badge className="mb-6 bg-green-100 text-green-900 border-2 border-green-500">
-                Feedback Inteligente
+                {t.landing.feedback.badge}
               </Badge>
               <h2 className="text-4xl font-black text-gray-900 mb-6">
-                Sistema de Feedback Contínuo
+                {t.landing.feedback.title}
               </h2>
               <p className="text-lg text-gray-700 mb-8">
-                Receba insights acionáveis em tempo real sobre cada criativo. Nossa IA aprende com seus resultados e sugere melhorias contínuas.
+                {t.landing.feedback.subtitle}
               </p>
 
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <Check className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Dashboards Interativos</h3>
-                    <p className="text-gray-600 text-sm">Visualize métricas de performance em tempo real</p>
+                    <h3 className="font-bold text-gray-900 mb-1">{t.landing.feedback.feature1.title}</h3>
+                    <p className="text-gray-600 text-sm">{t.landing.feedback.feature1.description}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Check className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Sugestões com IA</h3>
-                    <p className="text-gray-600 text-sm">Recomendações automáticas baseadas em dados</p>
+                    <h3 className="font-bold text-gray-900 mb-1">{t.landing.feedback.feature2.title}</h3>
+                    <p className="text-gray-600 text-sm">{t.landing.feedback.feature2.description}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Check className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Melhoria Contínua</h3>
-                    <p className="text-gray-600 text-sm">A plataforma aprende e evolui com seu uso</p>
+                    <h3 className="font-bold text-gray-900 mb-1">{t.landing.feedback.feature3.title}</h3>
+                    <p className="text-gray-600 text-sm">{t.landing.feedback.feature3.description}</p>
                   </div>
                 </div>
               </div>
@@ -369,9 +369,9 @@ export default function Home() {
       <section id="roi" className="container mx-auto px-4 py-20 bg-gradient-to-br from-green-50 to-white scroll-mt-24">
         <div className="max-w-4xl mx-auto text-center">
           <Badge className="mb-6 bg-green-100 text-green-900 border-2 border-green-500">
-            Resultados Comprovados
+            {t.landing.roi.badge}
           </Badge>
-          <h2 className="text-4xl font-black text-gray-900 mb-12">ROI que Impressiona</h2>
+          <h2 className="text-4xl font-black text-gray-900 mb-12">{t.landing.roi.title}</h2>
 
           <Card className="bg-white border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
             <CardContent className="p-0">
@@ -380,23 +380,23 @@ export default function Home() {
                 <div className="p-8 border-r-2 border-black">
                   <h3 className="text-xl font-black text-gray-900 mb-6 flex items-center gap-2">
                     <Users className="w-6 h-6 text-green-600" />
-                    Cenário Real de Cliente
+                    {t.landing.roi.realClient}
                   </h3>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center pb-3 border-b-2 border-gray-200">
-                      <span className="text-gray-700">Tempo Manual (mês)</span>
-                      <span className="font-black text-gray-900">240 horas</span>
+                      <span className="text-gray-700">{t.landing.roi.manualTime}</span>
+                      <span className="font-black text-gray-900">240 {t.landing.roi.stats.hours}</span>
                     </div>
                     <div className="flex justify-between items-center pb-3 border-b-2 border-gray-200">
-                      <span className="text-gray-700">Tempo com IA (mês)</span>
-                      <span className="font-black text-gray-900">38 horas</span>
+                      <span className="text-gray-700">{t.landing.roi.aiTime}</span>
+                      <span className="font-black text-gray-900">38 {t.landing.roi.stats.hours}</span>
                     </div>
                     <div className="flex justify-between items-center pb-3 border-b-2 border-gray-200">
-                      <span className="text-gray-700">Economia Mensal</span>
+                      <span className="text-gray-700">{t.landing.roi.monthlySavings}</span>
                       <span className="font-black text-green-600">R$ 274.926</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-700">Investimento Mensal</span>
+                      <span className="text-gray-700">{t.landing.roi.monthlyInvestment}</span>
                       <span className="font-black text-gray-900">R$ 12.500</span>
                     </div>
                   </div>
@@ -405,11 +405,11 @@ export default function Home() {
                 {/* Right Side - ROI */}
                 <div className="p-8 bg-gradient-to-br from-green-50 to-white flex flex-col items-center justify-center">
                   <div className="text-7xl font-black text-green-600 mb-4">2.539%</div>
-                  <div className="text-xl font-bold text-gray-900 mb-2">ROI no Primeiro Ano</div>
-                  <p className="text-sm text-gray-600 mb-6">Payback em apenas 18 dias</p>
+                  <div className="text-xl font-bold text-gray-900 mb-2">{t.landing.roi.roi}</div>
+                  <p className="text-sm text-gray-600 mb-6">{t.landing.roi.payback}</p>
                   <Link href="/roi-calculator">
                     <Button variant="primary" size="lg" className="bg-green-500 hover:bg-green-600">
-                      Calcular Seu ROI
+                      {t.landing.roi.cta}
                       <ArrowRight className="w-5 h-5 ml-2" />
                     </Button>
                   </Link>
@@ -425,10 +425,10 @@ export default function Home() {
         <Card className="bg-white border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
           <CardContent className="p-16 text-center">
             <h2 className="text-4xl lg:text-5xl font-black text-gray-900 mb-4">
-              Pronto para Transformar sua Produção Criativa?
+              {t.landing.cta.title}
             </h2>
             <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-              Junte-se às agências e empresas que já estão revolucionando seus workflows com IA
+              {t.landing.cta.subtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/signup">
@@ -436,7 +436,7 @@ export default function Home() {
                   variant="primary"
                   className="bg-green-500 hover:bg-green-600 border-2 border-black text-lg px-10 py-6 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                 >
-                  Agendar Demo Personalizada
+                  {t.landing.cta.ctaPrimary}
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
@@ -445,7 +445,7 @@ export default function Home() {
                   variant="default"
                   className="text-lg px-10 py-6 font-bold"
                 >
-                  Ver Planos e Preços
+                  {t.landing.cta.ctaSecondary}
                 </Button>
               </Link>
             </div>
