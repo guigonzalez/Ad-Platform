@@ -204,13 +204,13 @@ export const useStore = create<AppState>((set) => ({
           // Check if adding this campaign would exceed group limit
           if (currentGroupBudget + campaign.dailyBudget > group.dailyBudgetLimit) {
             useNotifications.getState().addNotification({
-              type: "budget_exceeded",
+              type: "budget_alert",
               title: "Budget Limit Exceeded",
               message: `Cannot assign campaign. Group daily budget limit of $${group.dailyBudgetLimit} would be exceeded.`,
               actionUrl: "/dashboard/campaigns",
               metadata: {
-                groupId: group.id,
-                groupName: group.name,
+                campaignName: group.name,
+                amount: group.dailyBudgetLimit,
               },
             });
             return state;
