@@ -1,4 +1,4 @@
-name: Build and Test
+name: CI - Build and Test
 
 on:
   push:
@@ -29,4 +29,4 @@ jobs:
         run: npm run build
 
       - name: Build completed
-        run: echo "Build successful!"
+        run: echo "Build successful! Deploy is handled automatically by Vercel."

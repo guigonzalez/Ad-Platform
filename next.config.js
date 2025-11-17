@@ -4,10 +4,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Temporarily disabled static export due to dynamic routes
-  // output: 'export',
-  // basePath: process.env.NODE_ENV === 'production' ? '/Ad-Platform' : '',
-  // assetPrefix: process.env.NODE_ENV === 'production' ? '/Ad-Platform/' : '',
+  // Static export disabled - using Vercel for deployment
+  // This app requires dynamic routes and SSR features
 };
 
 export default nextConfig;
