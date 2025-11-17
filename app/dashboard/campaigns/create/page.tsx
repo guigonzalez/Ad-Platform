@@ -14,6 +14,7 @@ import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import type { Platform, CampaignObjective } from "@/lib/mock-data";
 import type { CreativeAsset } from "@/lib/types/assets";
 import { AssetUpload } from "@/components/campaign/asset-upload";
+import { AIAssetGenerator } from "@/components/campaign/ai-asset-generator";
 
 interface FormData {
   name: string;
@@ -346,19 +347,37 @@ export default function CreateCampaignPage() {
 
           {/* Step 3: Creative Assets */}
           {currentStep === 3 && (
-            <div className="space-y-4">
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Upload Creative Assets</h3>
-                <p className="text-sm text-gray-600">
-                  Add images, videos, stories, and other creative assets for your campaign
-                </p>
+            <div className="space-y-6">
+              {/* AI Asset Generator */}
+              <AIAssetGenerator />
+
+              {/* Divider */}
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t-2 border-black"></div>
+                </div>
+                <div className="relative flex justify-center">
+                  <span className="bg-gray-50 px-4 text-sm font-bold text-gray-700 uppercase">
+                    Or Upload Manually
+                  </span>
+                </div>
               </div>
 
-              <AssetUpload
-                platform={formData.platform.length === 1 ? formData.platform[0] : "BOTH"}
-                value={formData.assets}
-                onChange={(assets) => updateForm({ assets })}
-              />
+              {/* Manual Upload */}
+              <div>
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2 uppercase">Upload Creative Assets</h3>
+                  <p className="text-sm text-gray-600">
+                    Add images, videos, stories, and other creative assets for your campaign
+                  </p>
+                </div>
+
+                <AssetUpload
+                  platform={formData.platform.length === 1 ? formData.platform[0] : "BOTH"}
+                  value={formData.assets}
+                  onChange={(assets) => updateForm({ assets })}
+                />
+              </div>
             </div>
           )}
 
